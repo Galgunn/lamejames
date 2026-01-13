@@ -30,8 +30,14 @@ class GameWorld(State):
         if self.paul_rect.collidepoint(mpos) and self.game.state_interaction_options['left_click']['just_pressed']:
             self.trigger_dialogue('paul', 'paul_test.json')
 
-        if mpos <= int(SCREEN_SIZE[0]) - 100:
+        if mpos[0] >= int(SCREEN_CENTER[0] + 300): # moving right
+            self.bg_rect.x -= 2
+            if self.bg_rect.right <= SCREEN_SIZE[0]:
+                self.bg_rect.right = SCREEN_SIZE[0]
+        elif mpos[0] <= int(SCREEN_CENTER[0] - 300): # moving left
             self.bg_rect.x += 2
+            if self.bg_rect.left >= 0:
+                self.bg_rect.left = 0
 
         
         if self.game.state_interaction_options['escape']['just_pressed']:
