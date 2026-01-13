@@ -6,10 +6,24 @@ pygame.init()
 
 class Game:
     def __init__(self):
+        '''
+        Docstring for __init__
+        
+        Basic pygame setup. self.load_state() adds the main_menu state to the state_stack
+        '''
+        # Annotating variables
+        self.screen: pygame.Surface
+        self.display: pygame.Surface
+        self.clock: pygame.Clock
+        self.running: bool
+        self.state_stack: list
+        self.state_interaction_options: dict
+        self.assets: dict
+
+        # Initializing variables
         self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]))
-        self.clock = pygame.time.Clock()
-        # self.display = pygame.Surface((DISPLAY_SIZE[0], DISPLAY_SIZE[1]))
         self.display = pygame.Surface((SCREEN_SIZE[0], SCREEN_SIZE[1]))
+        self.clock = pygame.time.Clock()
         self.running = True
         self.state_stack = []
 
@@ -31,6 +45,15 @@ class Game:
         self.load_state()
 
     def run(self):
+        '''
+        Docstring for run
+        
+        A while loop that keeps on looping while the var self.running is True. 
+        - Resets any state interaction options back to false
+        - Runs the event handler for any pygame events
+        - Calls update() and render() for state objects in the state stack
+
+        '''
         while self.running:
 
             for key in self.state_interaction_options:
@@ -41,23 +64,57 @@ class Game:
             self.render()
 
     def update(self):
+        '''
+        Docstring for update
+        
+        Calls the update() fucntion for the last state object in the state stack
+        '''
         self.state_stack[-1].update()
 
     def render(self):
+        '''
+        Docstring for render
+        
+        Calls the render() function for the last state object in the state stack
+        - Passes the arg self.display to the state object render() function
+        - Blits self.display to the window/screen
+        - pygame.display.flip() updates the screen
+        - self.clock.tick(60) sets the framerate to 60 fps
+        '''
         self.state_stack[-1].render(self.display)
-        # self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
         self.screen.blit(self.display, (0, 0))
         pygame.display.flip()
         self.clock.tick(60)
 
     def load_state(self):
+        '''
+        Docstring for load_state
+        
+        Creates the main menu state object and adds it to the state stack
+        '''
         self.game_state = MainMenu(self)
         self.state_stack.append(self.game_state)
     
     def reset_keys(self):
+        '''
+        Docstring for reset_keys
+        
+        Empty/placeholder function. Was originally supposed to reset any of the state_interaction_options values to False
+        '''
         pass
 
     def event_handler(self):
+        '''
+        Docstring for event_handler
+        
+        The pygame event handler.
+        - Checks for a quit event that closes the game when the player click on the x on the pygame window
+        - Checks for a keydown and keyup event
+        - Checks for a mousebuttondown event
+
+        Has some unnecesary events that are not needed. I did take this from a previous project so thats why it's there
+        :p
+        '''
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -88,5 +145,6 @@ class Game:
                     if event.button == 1:
                         self.state_interaction_options['left_click']['just_pressed'] = True
 
+# Runs the game.py file as a script
 if __name__ == '__main__':
     Game().run()

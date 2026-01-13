@@ -1,0 +1,18 @@
+pre alpha ver. 0.0.3 ---- 1/13
+
+-----CHANGES-----
+Added some documentation to the following files:
+- game.py
+- utils.py
+- state.py
+- dialogue_system.py
+- menu_builder.py
+
+Changed a variable for the screen scrolling in game_world.py
+
+-----WIP-----
+Trying to work on a better and improved dialogue organization method and/or system
+
+-----NOTES-----
+Hopefully this helps us understand what each file does and is responsible for. I wasn't able to work on much on the WIP :(
+
