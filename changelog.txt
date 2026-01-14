@@ -1,4 +1,13 @@
-pre alpha ver. 0.0.3 ---- 1/13
+**** pre alpha 0.0.4 **** 1/13 SP
+
+-----CHANGES-----
+Added sprite fly-in transition to Nate before dialogue state activates (game_world.py)
+
+-----WIP-----
+Adapting this transition to be used with other characters
+Improve dialogue system organization: how will we handle branches?
+
+**** pre alpha ver. 0.0.3 **** 1/13 KM
 
 -----CHANGES-----
 Added some documentation to the following files:
