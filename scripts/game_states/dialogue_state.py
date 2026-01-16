@@ -17,13 +17,18 @@ class DialogueState(State):
         self.load(BASE_JSON_PATH + self.json_filename)
         self.dialogue_box_rect:pygame.FRect = pygame.Rect(0, 0, SCREEN_SIZE[0], 200)
         self.character_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[character_name + 'talk'], 1.5)
-        
+
         self.dialogue_system:DialogueSystem = DialogueSystem(self.game, self.lines, self.special_lines, self.dialogue_box_rect.width)
+
+        pygame.mixer.music.load('assets/music/examiner.wav')
+
+        pygame.mixer.music.play(-1,0.0)
 
     def update(self):
         self.dialogue_system.update()
 
         if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
+            pygame.mixer.music.stop()
             self.exit_state()
 
     def render(self, surf):

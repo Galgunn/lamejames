@@ -18,7 +18,7 @@ class Game:
         self.running: bool
         self.state_stack: list
         self.state_interaction_options: dict
-        self.assets: dict
+        self.assets: dict      
 
         # Initializing variables
         self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]))
