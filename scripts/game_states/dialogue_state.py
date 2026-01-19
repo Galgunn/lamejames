@@ -20,10 +20,12 @@ class DialogueState(State):
 
         self.dialogue_system:DialogueSystem = DialogueSystem(self.game, self.lines, self.special_lines, self.dialogue_box_rect.width)
 
+        pygame.mixer.pre_init(44100,-16, 2, 1)
+        pygame.mixer.init()      
         pygame.mixer.music.load('assets/music/examiner.wav')
-
+        
         pygame.mixer.music.play(-1,0.0)
-
+        
     def update(self):
         self.dialogue_system.update()
 
