@@ -1,3 +1,17 @@
+**** pre alpha 0.0.5 **** 1/22 KM
+
+-----CHANGES-----
+Publishing a new branch in where I can work with creating a working dialogue system for our game
+We can continue working with what we have without worrying about breaking our working game so far
+
+-----WIP-----
+Creating a dialogue system that can change the font color based on the character thats speaking
+
+-----NOTES-----
+Adding this branch may help us work and push stuff into our game and get a working demo by our deadline without
+worrying about breaking the game
+
+
 **** pre alpha 0.0.4 **** 1/13 SP
 
 -----CHANGES-----
@@ -6,6 +20,7 @@ Added sprite fly-in transition to Nate before dialogue state activates (game_wor
 -----WIP-----
 Adapting this transition to be used with other characters
 Improve dialogue system organization: how will we handle branches?
+
 
 **** pre alpha ver. 0.0.3 **** 1/13 KM
 

@@ -1,8 +1,10 @@
 from scripts.utils import FONT
-import pygame
+import pygame, json
+
+BASE_JSON_PATH:str = 'assets/dialogue/dialogue_'
 
 class DialogueSystem:
-    def __init__(self, game, lines:list, special_lines:list, wrap_length: int):
+    def __init__(self, game, lines:list, wrap_length: int):
         '''
         Docstring for __init__
         
@@ -42,8 +44,27 @@ class DialogueSystem:
         self.line = self.dialogue_lines[self.current_line]
         self.dialogue_complete = False
 
-        # For testing purposes
-        self.special_lines:list = special_lines
+    # def __init__(self, game, scene, character, wraplength):
+    #     self.game = game
+    #     self.scene = scene
+    #     self.character = character
+    #     self.scene_dialogue: list = [] # list of dicts
+    #     self.index = 0
+    #     self.id: str = ''
+    #     self.next_id: str = ''
+    #     self.speaker: str = ''
+    #     self.dialogue_lines: list = []
+    #     self.special_variables: str = ''
+    #     self.load_json(BASE_JSON_PATH)
+    #     self.wrap_length = int(wraplength)
+    #     self.font = FONT
+    #     self.snip = self.font.render('', True, (255, 255, 255))
+    #     self.counter = 0
+    #     self.speed = 3
+    #     self.line_done = False
+    #     self.current_line = 0
+    #     self.line = self.dialogue_lines[self.current_line]
+    #     self.dialogue_complete = False
 
     def update(self):
         '''
@@ -64,15 +85,22 @@ class DialogueSystem:
         # Display line instantly if player click on screen
         if self.game.state_interaction_options['left_click']['just_pressed'] and not self.line_done:
             self.counter = self.speed * len(self.line)
-        # Proceed to the next line
+        # Proceed to the next line if list has more than one line
         elif self.game.state_interaction_options['left_click']['just_pressed'] and self.line_done and self.current_line < len(self.dialogue_lines) - 1:
             self.current_line += 1
             self.line_done = False
             self.line = self.dialogue_lines[self.current_line]
             self.counter = 0
+        
         # Checks if there is no more dialogue lines
-        elif self.current_line == len(self.dialogue_lines) - 1 and self.line_done:
-            self.dialogue_complete = True
+        # elif self.current_line == len(self.dialogue_lines) - 1 and self.line_done:
+            # self.dialogue_complete = True
+        
+        # Proceeds to the next id
+        elif self.current_line == len(self.dialogue_lines) - 1 and self.line_done and self.special_variables != 'complete':
+            pass
+        
+        # Checks for any special variables like 'complete'
 
         # Creates the surface object by rendering part of the current line by letters
         self.snip = self.font.render(self.line[0:self.counter//self.speed], True, 'white', None, self.wrap_length)
@@ -108,3 +136,20 @@ class DialogueSystem:
         self.line = self.dialogue_lines[self.current_line]
         self.dialogue_complete = False        
         self.snip = self.font.render('', True, (255, 255, 255))
+    
+    def load_json(self, path: str):
+        f = open(path, 'r')
+        dialogue_data = json.load(f)
+        f.close()
+
+    #     self.scene_dialogue = dialogue_data[self.scene, self.character + '_dialogue']
+    #     self.id = dialogue_data[self.scene][self.character + '_dialogue'][self.index]['id']
+    #     self.next_id = dialogue_data[self.scene][self.character + '_dialogue'][self.index]['next_id']
+    #     self.speaker = dialogue_data[self.scene][self.character + '_dialogue'][self.index]['speaker']
+    #     self.line = dialogue_data[self.scene][self.character + '_dialogue'][self.index]['lines']
+    #     self.special_variables = dialogue_data[self.scene][self.character + '_dialogue'][self.index]['special_variables']
+
+    # def get_nextline(self):
+    #     self.index += 1
+    #     self.id = self.scene_dialogue[self.index]['next_id']
+    #     self.next_id = self.scene_dialogue[self.index]['next_id']

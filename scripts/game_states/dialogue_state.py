@@ -8,29 +8,33 @@ BASE_JSON_PATH:str = 'assets/dialogue/'
 CHARACTER_TALKING_POS:tuple = (650, 100)
 
 class DialogueState(State):
-    def __init__(self, game, character_name:str, filename:str):
+    def __init__(self, game, speaker_name:str, filename:str):
         super().__init__(game)
         self.lines:list = []
-        self.special_lines:list = []
-        self.character_name:str = character_name
+        self.speaker_name:str = speaker_name
         self.json_filename:str = filename
+        self.dialogue_data = {}
+        self.aliza_dialogue_counter = 0
         self.load(BASE_JSON_PATH + self.json_filename)
+        print(self.dialogue_data)
+
+
+        # Dialogue testing
+
         self.dialogue_box_rect:pygame.FRect = pygame.Rect(0, 0, SCREEN_SIZE[0], 200)
-        self.character_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[character_name + 'talk'], 1.5)
+        self.character_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[speaker_name + 'talk'], 1.5)
 
-        self.dialogue_system:DialogueSystem = DialogueSystem(self.game, self.lines, self.special_lines, self.dialogue_box_rect.width)
+        self.dialogue_system:DialogueSystem = DialogueSystem(self.game, self.lines, self.dialogue_box_rect.width)
 
-        pygame.mixer.pre_init(44100,-16, 2, 1)
-        pygame.mixer.init()      
         pygame.mixer.music.load('assets/music/examiner.wav')
-        
+
         pygame.mixer.music.play(-1,0.0)
-        
+
     def update(self):
         self.dialogue_system.update()
 
         if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
-            pygame.mixer.music.stop()
+            # pygame.mixer.music.stop()
             self.exit_state()
 
     def render(self, surf):
@@ -42,10 +46,10 @@ class DialogueState(State):
 
     def load(self, path):
         f = open(path, 'r')
-        dialogue_data = json.load(f)
+        dialogue_dict = json.load(f)
         f.close()
 
-        self.lines = dialogue_data[self.character_name]
+        self.dialogue_data = dialogue_dict["dialogue_" + str(self.aliza_dialogue_counter)]
         # self.special_lines = dialogue_data['special']
 
     def on_enter(self):
