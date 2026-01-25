@@ -1,8 +1,27 @@
 {
-    "paul":[
-        "Hello I am Paul and this is a test",
-        "This is still a test OK",
-        "This is a really long text line to test the text wrapping it may look weird but fuck it we ball",
-        "PaulPaulPaulPaulPaulPaulPaulPaulPaulPaulPaulPaulPaulPaul"
-    ]
+    "dialogue_0" : {
+        "0": {
+            "speaker": "Paul",
+            "next_id": "1",
+            "lines": [
+                "H-hello there..."
+            ]            
+        },
+        "1": {
+            "speaker": "Player",
+            "next_id": "2",
+            "lines": [
+                "Don't be so nervous",
+                "I'm detective, testing and you are?"
+            ]            
+        },
+        "2": {
+            "speaker": "Paul",
+            "next_id": "",
+            "lines": [
+                "I'm Paul, s-sir"
+            ]        
+        }
+        
+    }
 }

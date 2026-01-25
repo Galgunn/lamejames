@@ -51,6 +51,7 @@ class GameWorld(State):
             self.trigger_dialogue(self.character_name)
             self.alpha_value = 255
             self.character_surf.set_alpha(self.alpha_value)
+            self.enterdiag = 0
 
         # if self.enterdiag == 1:   # sprite fly-in transition before dialogue
         #     self.natescale += 0.5

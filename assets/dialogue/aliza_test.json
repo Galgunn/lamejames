@@ -1,17 +1,11 @@
 {
-    "aliza":[
-        "Hello I am Aliza and this is a test",
-        "This is still a test OK",
-        "This is a really long text line to test the text wrapping it may look weird but fuck it we ball!!! ;)",
-        "AlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAliza"
-    ],
     "dialogue_0" : {
         "0": {
             "speaker": "Aliza",
             "next_id": "1",
             "lines": [
                 "Hello detective, how can I help you?"
-            ]
+            ]            
         },
         "1": {
             "speaker": "Player",
@@ -19,15 +13,14 @@
             "lines": [
                 "Morning, I'm good. Thanks for asking",
                 "Your name is?"
-            ]
+            ]            
         },
         "2": {
             "speaker": "Aliza",
             "next_id": "",
             "lines": [
                 "My name is Aliza"
-            ]
-        }
+            ]        }
         
     },
     "dialogue_1": {

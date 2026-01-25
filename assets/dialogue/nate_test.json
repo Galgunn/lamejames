@@ -1,8 +1,25 @@
 {
-    "nate":[
-        "Hello I am Nate and this is a test",
-        "This is still a test OK",
-        "This is a really long text line to test the text wrapping it may look weird but fuck it we ball",
-        "NateNateNateNateNateNateNateNateNateNateNateNateNateNate"
-    ]
+    "dialogue_0":{
+        "0": {
+            "speaker": "Nate",
+            "next_id": "1",
+            "lines": [
+                "How's it going?"
+            ]
+        },
+        "1": {
+            "speaker": "Player",
+            "next_id": "2",
+            "lines": [
+                "So good so far, your name is?"
+            ]
+        },
+        "2": {
+            "speaker": "Nate",
+            "next_id": "",
+            "lines": [
+                "It's Nate"
+            ]
+        }
+    }
 }
