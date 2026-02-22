@@ -1,11 +1,36 @@
 {
-    "aliza":[
-        "Hello I am Aliza and this is a test",
-        "This is still a test OK",
-        "This is a really long text line to test the text wrapping it may look weird but fuck it we ball!!! ;)",
-        "AlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAlizaAliza"
-    ],
-    "special":[
-        "This is a special test to test out different colors"
-    ]
+    "dialogue_0" : {
+        "0": {
+            "speaker": "Aliza",
+            "next_id": "1",
+            "lines": [
+                "Hello detective, how can I help you?"
+            ]            
+        },
+        "1": {
+            "speaker": "Player",
+            "next_id": "2",
+            "lines": [
+                "Morning, I'm good. Thanks for asking",
+                "Your name is?"
+            ]            
+        },
+        "2": {
+            "speaker": "Aliza",
+            "next_id": "",
+            "lines": [
+                "My name is Aliza"
+            ]        }
+        
+    },
+    "dialogue_1": {
+        "0": {
+            "speaker": "Aliza",
+            "next_id": "",
+            "lines": [
+                "Didnt you hear?",
+                "My name is Aliza"
+            ]
+        }
+    }
 }
