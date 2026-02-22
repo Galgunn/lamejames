@@ -47,7 +47,6 @@ class GameWorld(State):
             self.character_name = 'paul'
 
         if self.enterdiag == 1:
-            # self.trigger_dialogue(self.character_surf, self.character_name)
             self.trigger_dialogue(self.character_name)
             self.alpha_value = 255
             self.character_surf.set_alpha(self.alpha_value)

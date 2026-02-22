@@ -23,12 +23,12 @@ class DialogueSystem:
         self.dialogue_lines: list
         self.wrap_length: int
         self.font: pygame.Font
+        self.text_color: tuple
         self.snip:pygame.Surface
         self.counter: int
         self.speed: int
         self.line_done: bool
         self.current_line: int
-        self.line: str
         self.dialogue_complete: bool
 
         # Initalizing variables
@@ -55,7 +55,12 @@ class DialogueSystem:
         - Checks if dialogue is complete
         - Creates a surface object thats updates each letter (need better understanding of this)
         '''
+        # Declaring func variables
+        line: str
+
+        # Initializing variables
         line = self.dialogue_lines[self.current_line]
+        
         # Handles the type writer effect
         if self.counter < self.speed * len(line):
             self.counter += 1
@@ -75,7 +80,6 @@ class DialogueSystem:
             self.dialogue_complete = True
         
         # Creates the surface object by rendering part of the current line by letters
-        print(type(self.text_color))
         self.snip = self.font.render(line[0:self.counter//self.speed], True, self.text_color, None, self.wrap_length)
 
     def render(self, surf:pygame.Surface, text_starting_pos:tuple):

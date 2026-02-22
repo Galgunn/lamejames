@@ -2,40 +2,55 @@ import json
 import pygame
 from scripts.state import State
 from scripts.dialogue_system import DialogueSystem
-from scripts.utils import SCREEN_SIZE
+from scripts.utils import SCREEN_SIZE, FONT
 
 BASE_JSON_PATH:str = 'assets/dialogue/'
 CHARACTER_TALKING_POS:tuple = (650, 100)
 CHARACTER_FONT_COLORS:dict = {
-    'Aliza': (255, 0, 0),
-    'Nate': (0, 255, 0),
-    'Paul': (0, 0, 255),
+    'Aliza': (157, 232, 202),
+    'Nate': (253, 121, 142),
+    'Paul': (252, 209, 6),
     'Player': (255, 255, 255)
 }
 
 class DialogueState(State):
     def __init__(self, game, char_name:str, filename:str):
         super().__init__(game)
-        self.lines:list = []
-        self.json_filename:str = filename
-        self.dialogue_data = {}
+        # Annotate variables
+        self.lines: list
+        self.json_filename: str
+        self.aliza_dialogue_counter: int
+        self.dialogue_data: dict
+        self.speaker_name: str
+        self.current_id: str
+        self.next_id: str
+        self.lines: list
+        self.text_color: str
+        self.dialogue_box_rect: pygame.FRect
+        self.character_surf: pygame.Surface
+        self.dialogue_system: DialogueSystem
+        self.speaker_name_surf: pygame.Font
+
+        # Initializing variables
+        self.lines = []
+        self.json_filename = filename
         self.aliza_dialogue_counter = 0
-        self.current_id = '0'
+        self.dialogue_data = {}
         self.speaker_name = ''
+        self.current_id = '0'
         self.next_id = ''
         self.lines = []
+        self.text_color = ''
         self.load(BASE_JSON_PATH + self.json_filename)
+        self.dialogue_box_rect = pygame.FRect(0, 0, SCREEN_SIZE[0], 200)
+        self.character_surf = pygame.transform.scale_by(self.game.assets[char_name + 'talk'], 1.5)
+        self.dialogue_system = DialogueSystem(self.game, self.dialogue_box_rect.width)
 
-        # Dialogue testing
-
-        self.dialogue_box_rect:pygame.FRect = pygame.Rect(0, 0, SCREEN_SIZE[0], 200)
-        self.character_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[char_name + 'talk'], 1.5)
-
-        self.dialogue_system:DialogueSystem = DialogueSystem(self.game, self.dialogue_box_rect.width)
+        # Get dialogue data
         self.dialogue_system.get_lines(self.lines, self.text_color)
+        self.speaker_name_surf = FONT.render(self.speaker_name, True, self.text_color, (0, 0, 0))
 
         pygame.mixer.music.load('assets/music/examiner.wav')
-
         pygame.mixer.music.play(-1,0.0)
 
     def update(self):
@@ -55,6 +70,7 @@ class DialogueState(State):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
         self.dialogue_box_rect.topleft = (0, 600)
         surf.blit(self.character_surf, CHARACTER_TALKING_POS)
+        surf.blit(self.speaker_name_surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y - 25))
         pygame.draw.rect(surf, ('black'), self.dialogue_box_rect)
         self.dialogue_system.render(surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y + 10))
 
@@ -75,3 +91,4 @@ class DialogueState(State):
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']
         self.text_color = CHARACTER_FONT_COLORS[self.speaker_name]
+        self.speaker_name_surf = FONT.render(self.speaker_name, True, self.text_color, (0, 0, 0))
