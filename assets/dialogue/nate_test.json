@@ -1,5 +1,5 @@
 {
-    "dialogue_0":{
+    "interaction_0":{
         "0": {
             "speaker": "Nate",
             "next_id": "1",
@@ -19,6 +19,15 @@
             "next_id": "",
             "lines": [
                 "It's Nate"
+            ]
+        }
+    },
+    "interaction_1":{
+        "0": {
+            "speaker": "Nate",
+            "next_id": "",
+            "lines": [
+                "It's Nate sir..."
             ]
         }
     }

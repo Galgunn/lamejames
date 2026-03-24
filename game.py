@@ -30,6 +30,7 @@ class Game:
         self.state_interaction_options = {
             'escape': {'just_pressed': False},
             'left_click': {'just_pressed': False},
+            'enter': {'just_pressed': False}
         }
 
         self.assets = {
@@ -40,6 +41,11 @@ class Game:
             'natetalk': load_image('natetalk.png'),
             'paulfar': load_image('paulfar.png'),
             'paultalk': load_image('paultalk.png'),
+            'cursor_test': load_image('cursor_test.png')
+        }
+
+        self.testing_keys = {
+            'i': False
         }
 
         self.load_state()
@@ -58,6 +64,8 @@ class Game:
 
             for key in self.state_interaction_options:
                 self.state_interaction_options[key]['just_pressed'] = False
+            for key in self.testing_keys:
+                self.testing_keys[key] = False
 
             self.event_handler()
             self.update()
@@ -124,23 +132,8 @@ class Game:
                         self.state_interaction_options['enter']['just_pressed'] = True
                     if event.key == pygame.K_ESCAPE:
                         self.state_interaction_options['escape']['just_pressed'] = True
-                    if event.key == pygame.K_a:
-                        self.movement['left'] = True
-                    if event.key == pygame.K_d:
-                        self.movement['right'] = True
-                    if event.key == pygame.K_w:
-                        self.movement['up'] = True
-                    if event.key == pygame.K_s:
-                        self.movement['down'] = True
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_a:
-                        self.movement['left'] = False
-                    if event.key == pygame.K_d:
-                        self.movement['right'] = False
-                    if event.key == pygame.K_w:
-                        self.movement['up'] = False
-                    if event.key == pygame.K_s:
-                        self.movement['down'] = False
+                    if event.key == pygame.K_i:
+                        self.testing_keys['i'] = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         self.state_interaction_options['left_click']['just_pressed'] = True

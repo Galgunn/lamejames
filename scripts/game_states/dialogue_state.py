@@ -14,12 +14,12 @@ CHARACTER_FONT_COLORS:dict = {
 }
 
 class DialogueState(State):
-    def __init__(self, game, char_name:str, filename:str):
+    def __init__(self, game, char_name:str, filename:str, interaction_id:int):
         super().__init__(game)
+
         # Annotate variables
         self.lines: list
         self.json_filename: str
-        self.aliza_dialogue_counter: int
         self.dialogue_data: dict
         self.speaker_name: str
         self.current_id: str
@@ -30,18 +30,18 @@ class DialogueState(State):
         self.character_surf: pygame.Surface
         self.dialogue_system: DialogueSystem
         self.speaker_name_surf: pygame.Font
+        self.diag_counters: dict
 
         # Initializing variables
         self.lines = []
         self.json_filename = filename
-        self.aliza_dialogue_counter = 0
         self.dialogue_data = {}
         self.speaker_name = ''
         self.current_id = '0'
         self.next_id = ''
         self.lines = []
         self.text_color = ''
-        self.load(BASE_JSON_PATH + self.json_filename)
+        self.load(BASE_JSON_PATH + self.json_filename, interaction_id)
         self.dialogue_box_rect = pygame.FRect(0, 0, SCREEN_SIZE[0], 200)
         self.character_surf = pygame.transform.scale_by(self.game.assets[char_name + 'talk'], 1.5)
         self.dialogue_system = DialogueSystem(self.game, self.dialogue_box_rect.width)
@@ -50,8 +50,8 @@ class DialogueState(State):
         self.dialogue_system.get_lines(self.lines, self.text_color)
         self.speaker_name_surf = FONT.render(self.speaker_name, True, self.text_color, (0, 0, 0))
 
-        pygame.mixer.music.load('assets/music/examiner.wav')
-        pygame.mixer.music.play(-1,0.0)
+        # pygame.mixer.music.load('assets/music/examiner.wav')
+        # pygame.mixer.music.play(-1,0.0)
 
     def update(self):
         self.dialogue_system.update()
@@ -64,7 +64,6 @@ class DialogueState(State):
                 self.dialogue_system.reset()
             else:
                 self.exit_state()
-            
 
     def render(self, surf):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
@@ -74,12 +73,12 @@ class DialogueState(State):
         pygame.draw.rect(surf, ('black'), self.dialogue_box_rect)
         self.dialogue_system.render(surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y + 10))
 
-    def load(self, path):
+    def load(self, path, interaction_id:int):
         f = open(path, 'r')
         dialogue_dict = json.load(f)
         f.close()
 
-        self.dialogue_data = dialogue_dict["dialogue_" + str(self.aliza_dialogue_counter)]
+        self.dialogue_data = dialogue_dict["interaction_" + str(interaction_id)]
         self.speaker_name = self.dialogue_data[self.current_id]['speaker']
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']

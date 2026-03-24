@@ -1,5 +1,5 @@
 {
-    "dialogue_0" : {
+    "interaction_0" : {
         "0": {
             "speaker": "Aliza",
             "next_id": "1",
@@ -23,7 +23,7 @@
             ]        }
         
     },
-    "dialogue_1": {
+    "interaction_1": {
         "0": {
             "speaker": "Aliza",
             "next_id": "",
