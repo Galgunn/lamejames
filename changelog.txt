@@ -1,3 +1,8 @@
+**** pre alpha 0.0.6 **** 1/22 KM
+
+-----CHANGES-----
+Published new branch to continue building systems for the game
+
 **** pre alpha 0.0.5 **** 1/22 KM
 
 -----CHANGES-----

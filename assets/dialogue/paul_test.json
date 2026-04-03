@@ -21,7 +21,8 @@
             "lines": [
                 "I'm Paul, s-sir"
             ]        
-        }
+        },
+        "flags": ""
         
     },
     "interaction_1":{
@@ -31,6 +32,7 @@
             "lines": [
                 "Y-yeah, it's Paul"
             ]
-        }
+        },
+        "flags": "full interaction complete"
     }
 }

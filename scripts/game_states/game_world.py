@@ -24,6 +24,7 @@ class GameWorld(State):
         self.nate_rect: pygame.FRect
         self.paul_surf: pygame.Surface
         self.paul_rect: pygame.FRect
+        self.dialogue_box = DialogueState
         
         pygame.mouse.set_pos(SCREEN_CENTER)
         self.bg_surf:pygame.Surface = self.game.assets['background']
@@ -38,6 +39,7 @@ class GameWorld(State):
         self.nate_rect:pygame.FRect = self.nate_surf.get_frect(topleft= (250, 425))
         self.paul_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['paulfar'], 3)
         self.paul_rect:pygame.FRect = self.paul_surf.get_frect(topleft= (575, 450))
+        self.dialogue_box = DialogueState(self.game, 'aliza', 'aliza_test.json', 0)
 
         # Variables for dialogue transition 
         self.alpha_value:int = 255
@@ -45,9 +47,18 @@ class GameWorld(State):
         self.inventory:list = []
 
         self.diag_counter: dict = {
-            'aliza': 0,
-            'nate': 0,
-            'paul': 0
+            'aliza': {
+                'counter': 0,
+                'exhausted': False
+            },
+            'nate': {
+                'counter': 0,
+                'exhausted': False
+            },
+            'paul': {
+                'counter': 0,
+                'exhausted': False
+            }
         }
 
     def update(self):
@@ -71,15 +82,21 @@ class GameWorld(State):
             character_name = 'paul'
 
         if self.enterdiag == 1:
-            self.trigger_dialogue(character_name, self.diag_counter[character_name])
+            self.trigger_dialogue(character_name, self.diag_counter[character_name]['counter'])
             self.alpha_value = 255
             character_surf.set_alpha(self.alpha_value)
-            self.diag_counter[character_name] += 1
-            self.enterdiag = 0
+            if self.dialogue_box.get_flag():
+                self.enterdiag = 0
+            else:
+                self.diag_counter[character_name]['counter'] += 1
+                self.enterdiag = 0
 
         if self.game.state_interaction_options['enter']['just_pressed']:
             self.crime_scene_state = CrimeSceneState(self.game)
             self.crime_scene_state.enter_state()
+
+        # interactions = list(self.diag_counter.values())
+        # for x in interactions:
 
         # if self.game.testing_keys['i']:
         #     self.inventory.append('cigarette')
@@ -129,5 +146,6 @@ class GameWorld(State):
             self.enterdiag = 0
 
     def trigger_dialogue(self, character_name:str, interaction_id:int):
-        dialogue_box = DialogueState(self.game, character_name, character_name + '_test.json', interaction_id)
-        dialogue_box.enter_state()
+        print(interaction_id)
+        self.dialogue_box = DialogueState(self.game, character_name, character_name + '_test.json', interaction_id)
+        self.dialogue_box.enter_state()

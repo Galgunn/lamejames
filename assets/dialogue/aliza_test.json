@@ -20,8 +20,9 @@
             "next_id": "",
             "lines": [
                 "My name is Aliza"
-            ]        }
-        
+            ]        
+        },
+        "flags": ""
     },
     "interaction_1": {
         "0": {
@@ -31,6 +32,7 @@
                 "Didnt you hear?",
                 "My name is Aliza"
             ]
-        }
+        },
+    "flags": "full interaction complete"
     }
 }

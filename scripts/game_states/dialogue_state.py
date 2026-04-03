@@ -25,6 +25,7 @@ class DialogueState(State):
         self.current_id: str
         self.next_id: str
         self.lines: list
+        self.flags: str
         self.text_color: str
         self.dialogue_box_rect: pygame.FRect
         self.character_surf: pygame.Surface
@@ -40,11 +41,14 @@ class DialogueState(State):
         self.current_id = '0'
         self.next_id = ''
         self.lines = []
+        self.flags = ''
         self.text_color = ''
-        self.load(BASE_JSON_PATH + self.json_filename, interaction_id)
         self.dialogue_box_rect = pygame.FRect(0, 0, SCREEN_SIZE[0], 200)
         self.character_surf = pygame.transform.scale_by(self.game.assets[char_name + 'talk'], 1.5)
         self.dialogue_system = DialogueSystem(self.game, self.dialogue_box_rect.width)
+
+        # Loading interaction data
+        self.load(BASE_JSON_PATH + self.json_filename, interaction_id)
 
         # Get dialogue data
         self.dialogue_system.get_lines(self.lines, self.text_color)
@@ -75,13 +79,14 @@ class DialogueState(State):
 
     def load(self, path, interaction_id:int):
         f = open(path, 'r')
-        dialogue_dict = json.load(f)
+        self.dialogue_json = json.load(f)
         f.close()
 
-        self.dialogue_data = dialogue_dict["interaction_" + str(interaction_id)]
+        self.dialogue_data = self.dialogue_json["interaction_" + str(interaction_id)]
         self.speaker_name = self.dialogue_data[self.current_id]['speaker']
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']
+        self.flags = self.dialogue_data['flags']
         self.text_color = CHARACTER_FONT_COLORS[self.speaker_name]
 
     def get_next_id(self):
@@ -89,5 +94,9 @@ class DialogueState(State):
         self.speaker_name = self.dialogue_data[self.current_id]['speaker']
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']
+        self.flags = self.dialogue_data['flags']
         self.text_color = CHARACTER_FONT_COLORS[self.speaker_name]
         self.speaker_name_surf = FONT.render(self.speaker_name, True, self.text_color, (0, 0, 0))
+    
+    def get_flag(self):
+        return self.flags
