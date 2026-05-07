@@ -18,7 +18,9 @@ class Game:
         self.running: bool
         self.state_stack: list
         self.state_interaction_options: dict
-        self.assets: dict      
+        self.assets: dict
+
+        self.test_surf: pygame.Surface
 
         # Initializing variables
         self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]))
@@ -26,6 +28,9 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.state_stack = []
+
+        self.test_surf = pygame.Surface((50, 50))
+        self.test_surf.fill('white')
 
         self.state_interaction_options = {
             'escape': {'just_pressed': False},
@@ -41,7 +46,9 @@ class Game:
             'natetalk': load_image('natetalk.png'),
             'paulfar': load_image('paulfar.png'),
             'paultalk': load_image('paultalk.png'),
-            'cursor_test': load_image('cursor_test.png')
+            'cursor_test': load_image('cursor_test.png'),
+            'test_surf': self.test_surf
+
         }
 
         self.testing_keys = {

@@ -1,3 +1,14 @@
+**** pre alpha 0.0.7 **** 5/7 KM
+
+-----CHANGES-----
+added new game states -> crime_scene_state.py
+added new scripts -> interactable_obj.py (may delete)
+added new class in dialogue_state.py -> DescriptionObj
+
+-----WIP-----
+Working on fleshing out the crime scene state. Adding more evidence the player can interact with,
+must have the player interact with each piece of evidence before returning to game_world.py
+
 **** pre alpha 0.0.6 **** 1/22 KM
 
 -----CHANGES-----

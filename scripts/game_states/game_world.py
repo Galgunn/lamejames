@@ -44,8 +44,6 @@ class GameWorld(State):
         # Variables for dialogue transition 
         self.alpha_value:int = 255
 
-        self.inventory:list = []
-
         self.diag_counter: dict = {
             'aliza': {
                 'counter': 0,
@@ -60,6 +58,8 @@ class GameWorld(State):
                 'exhausted': False
             }
         }
+
+        self.enter_house_button = MenuBuilder(self.game, ['enter house'], (100, 100))
 
     def update(self):
         # Annotate variables
@@ -91,7 +91,8 @@ class GameWorld(State):
                 self.diag_counter[character_name]['counter'] += 1
                 self.enterdiag = 0
 
-        if self.game.state_interaction_options['enter']['just_pressed']:
+        self.enter_house_button.update(mpos)
+        if  self.enter_house_button.get_mouse_pressed('enter house'):
             self.crime_scene_state = CrimeSceneState(self.game)
             self.crime_scene_state.enter_state()
 
@@ -134,6 +135,7 @@ class GameWorld(State):
 
     def render(self, surf):
         surf.blit(self.bg_surf, self.bg_rect)
+        self.enter_house_button.render(surf)
         surf.blit(self.aliza_surf, self.aliza_rect)
         surf.blit(self.nate_surf, self.nate_rect)
         surf.blit(self.paul_surf, self.paul_rect)
@@ -146,6 +148,5 @@ class GameWorld(State):
             self.enterdiag = 0
 
     def trigger_dialogue(self, character_name:str, interaction_id:int):
-        print(interaction_id)
         self.dialogue_box = DialogueState(self.game, character_name, character_name + '_test.json', interaction_id)
         self.dialogue_box.enter_state()

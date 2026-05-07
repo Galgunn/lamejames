@@ -12,6 +12,8 @@ CHARACTER_FONT_COLORS:dict = {
     'Paul': (252, 209, 6),
     'Player': (255, 255, 255)
 }
+DIALOGUE_BOX_SIZE:tuple = (SCREEN_SIZE[0], 200)
+DIALOGUE_BOX_POS:tuple = (0, 600)
 
 class DialogueState(State):
     def __init__(self, game, char_name:str, filename:str, interaction_id:int):
@@ -31,7 +33,6 @@ class DialogueState(State):
         self.character_surf: pygame.Surface
         self.dialogue_system: DialogueSystem
         self.speaker_name_surf: pygame.Font
-        self.diag_counters: dict
 
         # Initializing variables
         self.lines = []
@@ -100,3 +101,23 @@ class DialogueState(State):
     
     def get_flag(self):
         return self.flags
+    
+class DescriptionState(State):
+    def __init__(self, game, desc_line:list):
+        super().__init__(game)
+        self.line = desc_line
+        self.dialogue_box_surf = pygame.Surface(DIALOGUE_BOX_SIZE)
+        self.dialogue_box_rect = self.dialogue_box_surf.get_frect(topleft= DIALOGUE_BOX_POS)
+        self.dialogue_system = DialogueSystem(self.game, DIALOGUE_BOX_SIZE[0])
+        self.dialogue_system.get_lines(self.line, (255, 255, 255))
+
+    def update(self):
+        self.dialogue_system.update()
+
+        if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
+            self.exit_state()
+
+    def render(self, surf):
+        surf.blit(self.dialogue_box_surf, self.dialogue_box_rect)
+        self.dialogue_system.render(surf, (DIALOGUE_BOX_POS[0] + 10, DIALOGUE_BOX_POS[1] + 10))
+
