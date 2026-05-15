@@ -1,3 +1,14 @@
+**** pre alpha 0.0.8 **** 5/15 KM
+
+-----CHANGES-----
+modified game state -> crime_scene_state.py
+modified script -> menu_builder.py
+added new class -> FontButton
+
+-----WIP-----
+Working on cleaning up the crime scene state, with the new font and surface buttons transitions would make it easier.
+So far I beleive we had a good foundation, we can probably start building the game further
+
 **** pre alpha 0.0.7 **** 5/7 KM
 
 -----CHANGES-----

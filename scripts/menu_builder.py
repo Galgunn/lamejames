@@ -96,6 +96,9 @@ class MenuBuilder():
             return True
         return False
     
+    def get_font_dict(self):
+        return self.font_dict
+    
     def render(self, surf):
         '''
         Docstring for render
@@ -108,4 +111,72 @@ class MenuBuilder():
             if self.font_dict[option]['on_font']:
                 surf.blit(self.font_dict[option]['highlight'], (self.font_dict[option]['rect'].x + 1, self.font_dict[option]['rect'].y + 1))
             surf.blit(self.font_dict[option]['text'], self.font_dict[option]['rect'])
+
+class SurfaceButton():
+    def __init__(self, game, surf:pygame.Surface, pos:tuple):
+        self.game = game
+        self.surf = surf
+        self.rect = self.surf.get_frect(topleft= pos)
+        self.pos = pos
+        self.on_rect = False
+
+    def update(self, mpos:tuple):
+        self.on_rect = False
+        if self.rect.collidepoint(mpos):
+            self.on_rect = True
+
+    def get_mouse_press(self):
+        if self.game.state_interaction_options['left_click']['just_pressed'] and self.on_rect:
+            return True
+        return False
+    
+    def get_on_rect(self):
+        return self.on_rect
+
+    def render(self, surf):
+        surf.blit(self.surf, self.rect)
+
+class FontButton():
+    def __init__(self, game, text:str, pos:tuple):
+        # Annotate variables
+        self.text: str
+        self.pos: tuple
+        self.font: pygame.Font
+        self.font_dict: dict
+
+
+        # Initialize variables
+        self.game = game
+        self.text = text
+        self.pos = pos
+        self.font = FONT
+        self.font_dict = {}
+        self.init_font()
+
+    def init_font(self):
+        font_surf = self.font.render(self.text, True, (0, 0, 0))
+        highlight_surf = self.font.render(self.text, True, (255, 255, 255))
+        font_rect = font_surf.get_frect(center = self.pos)
+
+        self.font_dict[self.text] = {
+            'text': font_surf,
+            'highlight': highlight_surf,
+            'rect': font_rect,
+            'on_font': False
+        }
+    
+    def update(self, mpos):
+        self.font_dict[self.text]['on_font'] = False
+        if self.font_dict[self.text]['rect'].collidepoint(mpos):
+            self.font_dict[self.text]['on_font'] = True
+
+    def render(self, surf):
+        if self.font_dict[self.text]['on_font']:
+            surf.blit(self.font_dict[self.text]['highlight'], (self.font_dict[self.text]['rect'].x + 1, self.font_dict[self.text]['rect'].y + 1))
+        surf.blit(self.font_dict[self.text]['text'], self.font_dict[self.text]['rect'])
+
+    def get_mouse_pressed(self):
+        if self.game.state_interaction_options['left_click']['just_pressed'] and self.font_dict[self.text]['on_font']:
+            return True
+        return False
     

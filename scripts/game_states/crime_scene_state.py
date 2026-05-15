@@ -2,6 +2,7 @@ from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DescriptionState
+from scripts.menu_builder import SurfaceButton, MenuBuilder, FontButton
 import pygame
 
 pygame.init()
@@ -15,12 +16,9 @@ class CrimeSceneState(State):
         self.cursor_surf: pygame.Surface
         self.cursor_rect: pygame.FRect
         self.mpos: tuple
-        self.interaction_obj: pygame.Surface
-        self.interaction_obj_rect: pygame.FRect
-        self.on_obj: bool
         self.interaction_obj_desc: list
         self.enter_diag: bool
-
+        self.on_background: bool
         self.evidence_objs: dict
 
         # Initializing variables
@@ -29,42 +27,63 @@ class CrimeSceneState(State):
         self.bg_rect = self.bg_surf.get_frect()
         self.cursor_surf = self.game.assets['cursor_test']
         self.mpos = pygame.mouse.get_pos()
-        self.interaction_obj = pygame.Surface((50, 50))
-        self.interaction_obj_rect = self.interaction_obj.get_frect(topleft = (100, 100))
-        self.on_obj = False
-        self.interaction_obj_desc = ["It's a white box", "still a white box", "when will you learn think man think omg its the lolsdjflsakdfl"]
         self.enter_diag = False
+        self.on_background = True
 
         self.evidence_objs = {
-            'white_box': {
-                'surf': self.game.assets['test_surf'],
-                'rect': self.interaction_obj_rect,
-                'description': [
-                    "It's a white box", "still a white box"
-                ]
+            'test': {
+                'obj': SurfaceButton(self.game, self.game.assets['test_surf'], (300, 300)),
+                'desc': [
+                    'Hopefully this works', 
+                    'pls work'
+                ],
+                'interacted': False
+            },
+            'test1': {
+                'obj': SurfaceButton(self.game, self.game.assets['test_surf'], (100, 100)),
+                'desc': [
+                    "This is another box",
+                    "Tee hee ^o^"
+                ],
+                'interacted': False
             }
         }
+        self.interactions_list = []
+        # self.enter_street_button: MenuBuilder = MenuBuilder(self.game, ['return to street'], (900, 700))
+        self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
 
     def update(self):
         enter_diag:bool = False
         self.mpos = pygame.mouse.get_pos()
-        if self.interaction_obj_rect.collidepoint(self.mpos):
-            pygame.mouse.set_visible(False)
-            self.on_obj = True
-        else:
-            pygame.mouse.set_visible(True)
-            self.on_obj = False
+        self.on_background = True
 
-        if self.interaction_obj_rect.collidepoint(self.mpos) and self.game.state_interaction_options['left_click']['just_pressed']:
-            enter_diag = True
+        for evidence in self.evidence_objs:
+            self.evidence_objs[evidence]['obj'].update(self.mpos)
+            if self.evidence_objs[evidence]['obj'].get_on_rect():
+                self.on_background = False
+            if self.evidence_objs[evidence]['obj'].get_mouse_press():
+                enter_diag = True
+                obj = evidence
+                self.evidence_objs[evidence]['interacted'] = True
 
         if enter_diag:
-            description_state = DescriptionState(self.game, self.interaction_obj_desc)
+            description_state = DescriptionState(self.game, self.evidence_objs[obj]['desc'])
             description_state.enter_state()
+
+        # self.enter_street_button.update(self.mpos)
+        # if self.enter_street_button.get_mouse_pressed('return to street'):
+        #     self.exit_state()
+
+        self.return_to_street_button.update(self.mpos)
+        if self.return_to_street_button.get_mouse_pressed():
+            self.exit_state()
     
     def render(self, surf):
         surf.blit(self.bg_surf, (0,0))
-        self.interaction_obj.fill('white')
-        surf.blit(self.interaction_obj, self.interaction_obj_rect)
-        if self.on_obj:
-            surf.blit(self.cursor_surf, self.mpos)
+        pygame.mouse.set_visible(self.on_background)
+        # self.enter_street_button.render(surf)
+        self.return_to_street_button.render(surf)
+        for evidence in self.evidence_objs:
+            self.evidence_objs[evidence]['obj'].render(surf)
+        if not self.on_background:
+            surf.blit(self.cursor_surf, self.mpos)     

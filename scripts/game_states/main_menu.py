@@ -13,7 +13,7 @@ class MainMenu(State):
         super().__init__(game)
         self.menu_text_options = ['Start', 'Settings', 'Credits', 'Editor', 'Exit']
         self.font_options = MenuBuilder(game, self.menu_text_options, SCREEN_CENTER)
-        self.font_dict = self.font_options.font_dict
+        self.font_dict = self.font_options.get_font_dict()
 
     def update(self):
         mpos = pygame.mouse.get_pos()
