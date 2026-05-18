@@ -1,3 +1,15 @@
+**** pre alpha 0.0.9 *** 5/18 KM
+
+-----CHANGES-----
+minor modifications to multiple files
+modified python file name -> menu_builder.py to button_builder.py
+
+-----WIP-----
+Working on getting new dialogue for our characters after visiting the crime scene
+Need to take another look at our dialogue system 
+Need to find a way to save important variables/flags, will help us with save files 
+(idea came to mind, store important flags in a seperate json file)
+
 **** pre alpha 0.0.8 **** 5/15 KM
 
 -----CHANGES-----

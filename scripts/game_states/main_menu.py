@@ -3,7 +3,7 @@ from scripts.utils import *
 from scripts.game_states.game_world import GameWorld
 # from scripts.game_states.setting_menu import SettingMenu
 # from scripts.game_states.credits_state import Credits 
-from scripts.menu_builder import MenuBuilder
+from scripts.button_builder import MenuBuilder
 import pygame
 
 pygame.init()

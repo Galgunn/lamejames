@@ -2,7 +2,7 @@ from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DescriptionState
-from scripts.menu_builder import SurfaceButton, MenuBuilder, FontButton
+from scripts.button_builder import SurfaceButton, FontButton
 import pygame
 
 pygame.init()
@@ -48,8 +48,9 @@ class CrimeSceneState(State):
                 'interacted': False
             }
         }
-        self.interactions_list = []
-        # self.enter_street_button: MenuBuilder = MenuBuilder(self.game, ['return to street'], (900, 700))
+
+        self.interacted_all_items = False
+        self.true_counter = 0
         self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
 
     def update(self):
@@ -64,26 +65,41 @@ class CrimeSceneState(State):
             if self.evidence_objs[evidence]['obj'].get_mouse_press():
                 enter_diag = True
                 obj = evidence
+                # Checking to see if it's the first time its getting interacted with
+                if not self.evidence_objs[evidence]['interacted']:
+                    # Update the counter
+                    self.true_counter += 1
+                # Setting to true so that we don't go into this loop 
                 self.evidence_objs[evidence]['interacted'] = True
 
         if enter_diag:
             description_state = DescriptionState(self.game, self.evidence_objs[obj]['desc'])
             description_state.enter_state()
 
-        # self.enter_street_button.update(self.mpos)
-        # if self.enter_street_button.get_mouse_pressed('return to street'):
-        #     self.exit_state()
-
         self.return_to_street_button.update(self.mpos)
         if self.return_to_street_button.get_mouse_pressed():
             self.exit_state()
+
+######### Tried to make the return button to appear after player interacts with all the items
+######### issue is that it resets the self.interacted_all_items each time 
+        if self.true_counter == len(self.evidence_objs):
+            self.interacted_all_items = True
+                
+        # if self.interacted_all_items:        
+        #     self.return_to_street_button.update(self.mpos)
+        #     if self.return_to_street_button.get_mouse_pressed():
+        #         self.exit_state()
     
     def render(self, surf):
         surf.blit(self.bg_surf, (0,0))
         pygame.mouse.set_visible(self.on_background)
-        # self.enter_street_button.render(surf)
+        
+        # Part of the condition to see the return button
+        # if self.interacted_all_items:
+        #     self.return_to_street_button.render(surf)
+
         self.return_to_street_button.render(surf)
         for evidence in self.evidence_objs:
             self.evidence_objs[evidence]['obj'].render(surf)
         if not self.on_background:
-            surf.blit(self.cursor_surf, self.mpos)     
+            surf.blit(self.cursor_surf, self.mpos)

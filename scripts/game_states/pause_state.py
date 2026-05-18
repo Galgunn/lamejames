@@ -1,6 +1,6 @@
 from scripts.state import State
 from scripts.utils import *
-from scripts.menu_builder import MenuBuilder
+from scripts.button_builder import MenuBuilder
 
 pygame.init()
 

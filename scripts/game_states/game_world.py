@@ -1,6 +1,6 @@
 from scripts.state import State
 from scripts.utils import SCREEN_CENTER, SCREEN_SIZE
-from scripts.menu_builder import MenuBuilder
+from scripts.button_builder import FontButton
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DialogueState
 from scripts.game_states.crime_scene_state import CrimeSceneState
@@ -59,7 +59,7 @@ class GameWorld(State):
             }
         }
 
-        self.enter_house_button = MenuBuilder(self.game, ['enter house'], (100, 100))
+        self.enter_house_button = FontButton(self.game, 'enter house', (100, 100))
 
     def update(self):
         # Annotate variables
@@ -92,7 +92,7 @@ class GameWorld(State):
                 self.enterdiag = 0
 
         self.enter_house_button.update(mpos)
-        if  self.enter_house_button.get_mouse_pressed('enter house'):
+        if  self.enter_house_button.get_mouse_pressed():
             self.crime_scene_state = CrimeSceneState(self.game)
             self.crime_scene_state.enter_state()
 
