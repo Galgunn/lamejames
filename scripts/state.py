@@ -51,6 +51,10 @@ class State():
 
         Adds the state class to the state stack list in game.py
         '''
+        if self.game.transitioning:
+            return
+        self.game.transitioning = True
+        
         if len(self.game.state_stack) >= 1:
             self.prev_state = self.game.state_stack[-1]
         self.game.state_stack.append(self)

@@ -1,3 +1,18 @@
+**** pre alpha 0.0.10 **** 5/21 KM
+
+-----CHANGES-----
+minor changes to multiple files
+modified file -> game.py, state.py
+
+-----WIP-----
+Trying find a way to keep track of dialogue counters because currently when the player enters the state the variables reset.
+Trying to find a way to track flags whenever they triggered and not reset whenever the player enters the state.
+Currently have a flag key in dialogue_test.json
+
+-----NOTES-----
+One thing I could do is make a dict tracking all the number of times the player has interacted with a character 
+or make a couple of flags in game.py or figure out if doing it in a json file would work
+
 **** pre alpha 0.0.9 *** 5/18 KM
 
 -----CHANGES-----

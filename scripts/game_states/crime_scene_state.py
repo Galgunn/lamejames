@@ -1,7 +1,7 @@
 from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
-from scripts.game_states.dialogue_state import DescriptionState
+from scripts.game_states.dialogue_state import DescriptionState, SceneState
 from scripts.button_builder import SurfaceButton, FontButton
 import pygame
 
@@ -52,11 +52,16 @@ class CrimeSceneState(State):
         self.interacted_all_items = False
         self.true_counter = 0
         self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
+        self.first_enter: bool = True
 
     def update(self):
         enter_diag:bool = False
         self.mpos = pygame.mouse.get_pos()
         self.on_background = True
+
+        if self.first_enter:
+            self.first_enter = False
+            self.trigger_scene_dialogue('house', 0)
 
         for evidence in self.evidence_objs:
             self.evidence_objs[evidence]['obj'].update(self.mpos)
@@ -73,8 +78,7 @@ class CrimeSceneState(State):
                 self.evidence_objs[evidence]['interacted'] = True
 
         if enter_diag:
-            description_state = DescriptionState(self.game, self.evidence_objs[obj]['desc'])
-            description_state.enter_state()
+            self.trigger_description_dialogue(obj)
 
         self.return_to_street_button.update(self.mpos)
         if self.return_to_street_button.get_mouse_pressed():
@@ -98,8 +102,19 @@ class CrimeSceneState(State):
         # if self.interacted_all_items:
         #     self.return_to_street_button.render(surf)
 
-        self.return_to_street_button.render(surf)
-        for evidence in self.evidence_objs:
-            self.evidence_objs[evidence]['obj'].render(surf)
+        if not self.first_enter:
+            self.return_to_street_button.render(surf)
+            for evidence in self.evidence_objs:
+                self.evidence_objs[evidence]['obj'].render(surf)
         if not self.on_background:
             surf.blit(self.cursor_surf, self.mpos)
+    
+    def trigger_description_dialogue(self, obj):
+        description_state = DescriptionState(self.game, self.evidence_objs[obj]['desc'])
+        description_state.enter_state()
+        return
+    
+    def trigger_scene_dialogue(self, scene, interaction_id):
+        self.dialogue_box = SceneState(self.game, 'dialogue_test.json', scene, interaction_id)
+        self.dialogue_box.enter_state()
+        return

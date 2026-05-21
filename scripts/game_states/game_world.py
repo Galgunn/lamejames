@@ -2,7 +2,7 @@ from scripts.state import State
 from scripts.utils import SCREEN_CENTER, SCREEN_SIZE
 from scripts.button_builder import FontButton
 from scripts.game_states.pause_state import PauseMenu
-from scripts.game_states.dialogue_state import DialogueState
+from scripts.game_states.dialogue_state import DialogueState, SceneState
 from scripts.game_states.crime_scene_state import CrimeSceneState
 import pygame
 
@@ -46,20 +46,21 @@ class GameWorld(State):
 
         self.diag_counter: dict = {
             'aliza': {
-                'counter': 0,
-                'exhausted': False
+                'interaction_num': 0,
             },
             'nate': {
-                'counter': 0,
-                'exhausted': False
+                'interaction_num': 0,
             },
             'paul': {
-                'counter': 0,
-                'exhausted': False
+                'interaction_num': 0,
+            },
+            'dialogue': {
+                'interaction_num': 0,
             }
         }
 
         self.enter_house_button = FontButton(self.game, 'enter house', (100, 100))
+        self.introduction:bool = False
 
     def update(self):
         # Annotate variables
@@ -95,6 +96,7 @@ class GameWorld(State):
         if  self.enter_house_button.get_mouse_pressed():
             self.crime_scene_state = CrimeSceneState(self.game)
             self.crime_scene_state.enter_state()
+            return
 
         # interactions = list(self.diag_counter.values())
         # for x in interactions:
@@ -132,13 +134,19 @@ class GameWorld(State):
         if self.game.state_interaction_options['escape']['just_pressed']:
             pause_menu_state = PauseMenu(self.game)
             pause_menu_state.enter_state()
+            return
+
+        if not self.introduction:
+            self.introduction = True
+            self.trigger_scene_dialogue('street', 0)
 
     def render(self, surf):
         surf.blit(self.bg_surf, self.bg_rect)
-        self.enter_house_button.render(surf)
-        surf.blit(self.aliza_surf, self.aliza_rect)
-        surf.blit(self.nate_surf, self.nate_rect)
-        surf.blit(self.paul_surf, self.paul_rect)
+        if self.introduction:
+            self.enter_house_button.render(surf)
+            surf.blit(self.aliza_surf, self.aliza_rect)
+            surf.blit(self.nate_surf, self.nate_rect)
+            surf.blit(self.paul_surf, self.paul_rect)
 
     def trigger_dialogue_anim(self, character_surf:pygame.Surface, character_name:str):
         self.alpha_value -= 15
@@ -150,3 +158,9 @@ class GameWorld(State):
     def trigger_dialogue(self, character_name:str, interaction_id:int):
         self.dialogue_box = DialogueState(self.game, character_name, character_name + '_test.json', interaction_id)
         self.dialogue_box.enter_state()
+        return
+
+    def trigger_scene_dialogue(self, scene, interaction_id):
+        self.dialogue_box = SceneState(self.game, 'dialogue_test.json', scene, interaction_id)
+        self.dialogue_box.enter_state()
+        return

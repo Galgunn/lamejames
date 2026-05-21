@@ -17,6 +17,7 @@ class Game:
         self.clock: pygame.Clock
         self.running: bool
         self.state_stack: list
+        self.transitioning: bool
         self.state_interaction_options: dict
         self.assets: dict
 
@@ -28,6 +29,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.state_stack = []
+        self.transitioning = False
 
         self.test_surf = pygame.Surface((50, 50))
         self.test_surf.fill('white')
@@ -84,6 +86,7 @@ class Game:
         
         Calls the update() fucntion for the last state object in the state stack
         '''
+        self.transitioning = False
         self.state_stack[-1].update()
 
     def render(self):

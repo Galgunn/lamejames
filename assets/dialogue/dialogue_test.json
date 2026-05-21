@@ -1,99 +1,79 @@
 {
-    "0":{
-        "aliza_dialogue":[
-            {
-                "id": "a1",
-                "next_id": "y1",
-                "speaker": "Aliza",
-                "lines": [
-                    "Hello testing, how are you?"
-                ],
-                "special_variables": ""
-            },
-            {
-                "id": "y1",
-                "next_id": "a2",
-                "speaker": "Player",
-                "lines": [
-                    "Morning, I'm detective testing",
-                    "Your name is?"
-                ],
-                "special_variables": ""
-            },
-            {
-                "id": "a2",
-                "next_id": "",
-                "speaker": "Aliza",
-                "lines": [
-                    "My name is Aliza"
-                ],
-                "special_variables": "complete"   
-            }
-        ],
-        "paul_dialogue": [
-            {
-                "id": "p1",
-                "next_id": "y1",
-                "speaker": "Paul",
-                "lines": [
-                    "H-hello there..."
-                ],
-                "special_variables": ""
-                
-
-            },
-            {
-                "id": "y1",
-                "next_id": "p2",
-                "speaker": "Player",
-                "lines": [
-                    "Don't be so nervous",
-                    "I'm detective, testing and you are?"
-                ],
-                "special_variables": ""
-            },
-            {
-                "id": "p2",
-                "next_id": "",
-                "speaker": "Paul",
-                "lines": [
-                    "I'm Paul, s-sir"
-                ],
-                "special_variables": "complete"
-            }
-        ],
-        "nate_dialogue": [
-            {
-                "id": "n1",
-                "next_id": "y1",
-                "speaker": "Nate",
-                "lines": [
-                    "How's it going?"
-                ],
-                "special_variables": ""
-            },
-            {
-                "id": "y1",
-                "next_id": "n2",
-                "speaker": "Player",
-                "lines": [
-                    "So good so far, your name is?"
-                ],
-                "special_variables": "complete"
-            },
-            {
-                "id": "n2",
-                "next_id": "",
-                "speaker": "Nate",
-                "lines": [
-                    "It's Nate"
-                ],
-                "special_variables": "complete"
-            }
-        ],
-        "testing_dialogue": {
-            "id": "a0"
+    "scene_0": {
+        "0": {
+            "speaker": "",
+            "next_id": "1",
+            "lines": [
+                "A murder has occured in the xyz apartment building",
+                "You were assigned this case",
+                "You notice all the tenats are already waiting outside"
+            ]
+        },
+        "1": {
+            "speaker": "Player",
+            "next_id": "",
+            "lines": [
+                "Well, here we go..."
+            ]
         }
-        
+    },
+    "scene_1": {
+        "0": {
+            "speaker": "",
+            "next_id": "1",
+            "lines": [
+                "You enter the building",
+                "It smells like metal"
+            ]
+        },
+        "1": {
+            "speaker": "Player",
+            "next_id": "",
+            "lines": [
+                "I hope I never get used to this smell"
+            ]
+        }
+    },
+
+    "street": {
+        "street_0": {
+            "0": {
+                "speaker": "",
+                "next_id": "1",
+                "lines": [
+                    "A murder has occured in the xyz apartment building",
+                    "You were assigned this case",
+                    "You notice all the tenats are already waiting outside"
+                ]
+            },
+            "1": {
+                "speaker": "Player",
+                "next_id": "",
+                "lines": [
+                    "Well, here we go..."
+                ]
+            },
+            "flags": "first_enter"
+        }
+    },
+    "house": {
+        "house_0": {
+            "0": {
+                "speaker": "",
+                "next_id": "1",
+                "lines": [
+                    "You enter the building",
+                    "It smells like metal"
+                ]
+            },
+            "1": {
+                "speaker": "Player",
+                "next_id": "",
+                "lines": [
+                    "I hope I never get used to this smell"
+                ]
+            },
+            "flags": "first_enter"
+        }
     }
 }
