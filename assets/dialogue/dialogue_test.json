@@ -1,40 +1,4 @@
 {
-    "scene_0": {
-        "0": {
-            "speaker": "",
-            "next_id": "1",
-            "lines": [
-                "A murder has occured in the xyz apartment building",
-                "You were assigned this case",
-                "You notice all the tenats are already waiting outside"
-            ]
-        },
-        "1": {
-            "speaker": "Player",
-            "next_id": "",
-            "lines": [
-                "Well, here we go..."
-            ]
-        }
-    },
-    "scene_1": {
-        "0": {
-            "speaker": "",
-            "next_id": "1",
-            "lines": [
-                "You enter the building",
-                "It smells like metal"
-            ]
-        },
-        "1": {
-            "speaker": "Player",
-            "next_id": "",
-            "lines": [
-                "I hope I never get used to this smell"
-            ]
-        }
-    },
-
     "street": {
         "street_0": {
             "0": {

@@ -61,14 +61,16 @@ class DialogueState(State):
     def update(self):
         self.dialogue_system.update()
 
-        if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
+        if self.game.state_interaction_options['left_click']['just_pressed']:
+            self.dialogue_system.advance()
+            
+            if self.dialogue_system.dialogue_complete:
             # pygame.mixer.music.stop()
-            if self.next_id != "":
-                self.get_next_id()
-                self.dialogue_system.get_lines(self.lines, self.text_color)
-                self.dialogue_system.reset()
-            else:
-                self.exit_state()
+                if self.next_id != "":
+                    self.get_next_id()
+                    self.dialogue_system.get_lines(self.lines, self.text_color)
+                else:
+                    self.exit_state()
 
     def render(self, surf):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
@@ -114,8 +116,10 @@ class DescriptionState(State):
     def update(self):
         self.dialogue_system.update()
 
-        if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
-            self.exit_state()
+        if self.game.state_interaction_options['left_click']['just_pressed']:
+            self.dialogue_system.advance()
+            if self.dialogue_system.dialogue_complete:
+                self.exit_state()
 
     def render(self, surf):
         self.prev_state.render(surf)
@@ -161,14 +165,16 @@ class SceneState(State):
     def update(self):
         self.dialogue_system.update()
 
-        if self.game.state_interaction_options['left_click']['just_pressed'] and self.dialogue_system.dialogue_complete:
+        if self.game.state_interaction_options['left_click']['just_pressed']:
+            self.dialogue_system.advance()
+            
+            if self.dialogue_system.dialogue_complete:
             # pygame.mixer.music.stop()
-            if self.next_id != "":
-                self.get_next_id()
-                self.dialogue_system.get_lines(self.lines, self.text_color)
-                self.dialogue_system.reset()
-            else:
-                self.exit_state()
+                if self.next_id != "":
+                    self.get_next_id()
+                    self.dialogue_system.get_lines(self.lines, self.text_color)
+                else:
+                    self.exit_state()
 
     def load(self, path:str, scene:str, interaction_id:int):
         f = open(path, 'r')

@@ -46,16 +46,16 @@ class GameWorld(State):
 
         self.diag_counter: dict = {
             'aliza': {
-                'interaction_num': 0,
+                'counter': 0,
             },
             'nate': {
-                'interaction_num': 0,
+                'counter': 0,
             },
             'paul': {
-                'interaction_num': 0,
+                'counter': 0,
             },
             'dialogue': {
-                'interaction_num': 0,
+                'counter': 0,
             }
         }
 
@@ -66,6 +66,12 @@ class GameWorld(State):
         # Annotate variables
         character_surf: pygame.Surface
         character_name: str
+
+        # test = "ya"
+        # if test:
+        #     print('yep a non empty string is true')
+        # elif test == 'ya':
+        #     print('yep comparing would also be true')
 
         self.nate_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['natefar'], self.natescale)
         mpos = pygame.mouse.get_pos()

@@ -1,3 +1,19 @@
+**** pre alpha 0.0.11 **** 5/25 KM
+
+-----CHANGES-----
+modified dialogue_system -> added advance() function
+modified dialogue_state -> modified update() logic
+
+Dialogue system has advance() funtion making it only handle moving to the next line.
+dialogue_state as well as scence and description, have their update keep track of when the player clicks 
+
+My dialogue_system would also look out for mouse button presses. Made sure dilogue_system would only check to see if
+the line is done and move to the next and render that. The update function in the dialogue_state classes 
+(dialogue, description, scene) will keep track if the player presses their mouse button. 
+
+-----WIP-----
+Working on a flag system instead of counters to track dialogue and events. 
+
 **** pre alpha 0.0.10 **** 5/21 KM
 
 -----CHANGES-----

@@ -66,18 +66,6 @@ class DialogueSystem:
             self.counter += 1
         elif self.counter >= self.speed * len(line):
             self.line_done = True
-        # Display line instantly if player click on screen
-        if self.game.state_interaction_options['left_click']['just_pressed'] and not self.line_done:
-            self.counter = self.speed * len(line)
-        # Proceed to the next line if list has more than one line
-        elif self.game.state_interaction_options['left_click']['just_pressed'] and self.line_done and self.current_line < len(self.dialogue_lines) - 1:
-            self.current_line += 1
-            self.line_done = False
-            line = self.dialogue_lines[self.current_line]
-            self.counter = 0
-        # Checks if there is no more dialogue lines
-        if self.current_line == len(self.dialogue_lines) - 1 and self.line_done:
-            self.dialogue_complete = True
         
         # Creates the surface object by rendering part of the current line by letters
         self.snip = self.font.render(line[0:self.counter//self.speed], True, self.text_color, None, self.wrap_length)
@@ -116,3 +104,23 @@ class DialogueSystem:
     def get_lines(self, lines, color):
         self.dialogue_lines = lines
         self.text_color = color
+        self.reset()
+
+    def advance(self):
+        # Declaring func variables
+        line: str
+
+        # Initializing variables
+        line = self.dialogue_lines[self.current_line]
+        # Display line instantly if player click on screen
+        if not self.line_done:
+            self.counter = self.speed * len(line)
+        # Proceed to the next line if list has more than one line
+        elif self.line_done and self.current_line < len(self.dialogue_lines) - 1:
+            self.current_line += 1
+            self.line_done = False
+            line = self.dialogue_lines[self.current_line]
+            self.counter = 0
+        # Checks if there is no more dialogue lines
+        if self.current_line == len(self.dialogue_lines) - 1 and self.line_done:
+            self.dialogue_complete = True
