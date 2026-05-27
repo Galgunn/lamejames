@@ -1,3 +1,20 @@
+**** pre alpha 0.0.12 **** 5/27 KM
+
+-----CHANGES-----
+created new branch -> wipdialogue
+added file -> state_utils.py
+modified files -> game, game_world, crime_scene, dialogue_state, aliza and dialogue jsons
+
+created new branch just for scaling the dialogue system
+state_utils have functions that will be usefull in every state example trigger dialogue function
+added flags variable to game.py
+game_world and crime_scene states handle dialogue differently
+aliza and dialogue json have flags in every interaction
+
+-----WIP-----
+Working on implementing the new way to track dialogue to other characters now. Working on how to make the new system
+a bit more scalable.
+
 **** pre alpha 0.0.11 **** 5/25 KM
 
 -----CHANGES-----

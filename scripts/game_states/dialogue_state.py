@@ -69,7 +69,10 @@ class DialogueState(State):
                 if self.next_id != "":
                     self.get_next_id()
                     self.dialogue_system.get_lines(self.lines, self.text_color)
-                else:
+                if self.next_id == "" and self.dialogue_system.dialogue_complete:
+                    for flag in self.flags:
+                        if flag != "":
+                            self.game.flags.add(flag)
                     self.exit_state()
 
     def render(self, surf):
@@ -173,7 +176,10 @@ class SceneState(State):
                 if self.next_id != "":
                     self.get_next_id()
                     self.dialogue_system.get_lines(self.lines, self.text_color)
-                else:
+                if self.next_id == "" and self.dialogue_system.dialogue_complete:
+                    for flag in self.flags:
+                        if flag != "":
+                            self.game.flags.add(flag)
                     self.exit_state()
 
     def load(self, path:str, scene:str, interaction_id:int):
@@ -185,6 +191,7 @@ class SceneState(State):
         self.speaker_name = self.dialogue_data[self.current_id]['speaker']
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']
+        self.flags = self.dialogue_data['flags']
         if self.speaker_name == "":
             self.text_color = (255, 255, 255)
         else:
@@ -195,6 +202,7 @@ class SceneState(State):
         self.speaker_name = self.dialogue_data[self.current_id]['speaker']
         self.next_id = self.dialogue_data[self.current_id]['next_id']
         self.lines = self.dialogue_data[self.current_id]['lines']
+        self.flags = self.dialogue_data['flags']
         if self.speaker_name == "":
             self.text_color = (255, 255, 255)
         else: 

@@ -17,7 +17,7 @@
                     "Well, here we go..."
                 ]
             },
-            "flags": "first_enter"
+            "flags": ["street_intro_done"]
         }
     },
     "house": {
@@ -37,7 +37,7 @@
                     "I hope I never get used to this smell"
                 ]
             },
-            "flags": "first_enter"
+            "flags": ["house_intro_done"]
         }
     }
 }

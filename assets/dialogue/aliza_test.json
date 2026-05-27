@@ -22,7 +22,7 @@
                 "My name is Aliza"
             ]        
         },
-        "flags": ""
+        "flags": ["aliza_intro_done"]
     },
     "interaction_1": {
         "0": {
@@ -33,6 +33,6 @@
                 "My name is Aliza"
             ]
         },
-    "flags": "full interaction complete"
+    "flags": [""]
     }
 }

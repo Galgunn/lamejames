@@ -4,6 +4,7 @@ from scripts.button_builder import FontButton
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DialogueState, SceneState
 from scripts.game_states.crime_scene_state import CrimeSceneState
+from scripts.state_utils import *
 import pygame
 
 pygame.init()
@@ -89,14 +90,11 @@ class GameWorld(State):
             character_name = 'paul'
 
         if self.enterdiag == 1:
-            self.trigger_dialogue(character_name, self.diag_counter[character_name]['counter'])
+            interaction_id = self.get_aliza_interaction(self.game)
+            trigger_character_dialogue(self.game, character_name, interaction_id)
             self.alpha_value = 255
             character_surf.set_alpha(self.alpha_value)
-            if self.dialogue_box.get_flag():
-                self.enterdiag = 0
-            else:
-                self.diag_counter[character_name]['counter'] += 1
-                self.enterdiag = 0
+            self.enterdiag = 0
 
         self.enter_house_button.update(mpos)
         if  self.enter_house_button.get_mouse_pressed():
@@ -142,13 +140,13 @@ class GameWorld(State):
             pause_menu_state.enter_state()
             return
 
-        if not self.introduction:
-            self.introduction = True
-            self.trigger_scene_dialogue('street', 0)
+        if get_flag(self.game, 'street_intro_done') == False:
+            interaction_id = self.get_scene_interaction(self.game)
+            trigger_scene_dialogue(self.game, 'street', interaction_id)
 
     def render(self, surf):
         surf.blit(self.bg_surf, self.bg_rect)
-        if self.introduction:
+        if get_flag(self.game, 'street_intro_done'):
             self.enter_house_button.render(surf)
             surf.blit(self.aliza_surf, self.aliza_rect)
             surf.blit(self.nate_surf, self.nate_rect)
@@ -160,13 +158,11 @@ class GameWorld(State):
         if self.alpha_value <= 0:
             self.trigger_dialogue(character_name)
             self.enterdiag = 0
-
-    def trigger_dialogue(self, character_name:str, interaction_id:int):
-        self.dialogue_box = DialogueState(self.game, character_name, character_name + '_test.json', interaction_id)
-        self.dialogue_box.enter_state()
-        return
-
-    def trigger_scene_dialogue(self, scene, interaction_id):
-        self.dialogue_box = SceneState(self.game, 'dialogue_test.json', scene, interaction_id)
-        self.dialogue_box.enter_state()
-        return
+    
+    def get_aliza_interaction(self, game) -> int:
+        if "aliza_intro_done" in game.flags:
+            return 1
+        return 0
+    
+    def get_scene_interaction(self, game):
+        return 0

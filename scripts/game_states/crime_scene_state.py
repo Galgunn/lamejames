@@ -3,6 +3,7 @@ from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DescriptionState, SceneState
 from scripts.button_builder import SurfaceButton, FontButton
+from scripts.state_utils import trigger_description_dialogue, trigger_scene_dialogue, get_flag
 import pygame
 
 pygame.init()
@@ -52,16 +53,15 @@ class CrimeSceneState(State):
         self.interacted_all_items = False
         self.true_counter = 0
         self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
-        self.first_enter: bool = True
 
     def update(self):
         enter_diag:bool = False
         self.mpos = pygame.mouse.get_pos()
         self.on_background = True
 
-        if self.first_enter:
-            self.first_enter = False
-            self.trigger_scene_dialogue('house', 0)
+        if get_flag(self.game, 'house_intro_done') == False:
+            interaction_id = self.get_scene_interaction(self.game)
+            trigger_scene_dialogue(self.game, 'house', interaction_id)
 
         for evidence in self.evidence_objs:
             self.evidence_objs[evidence]['obj'].update(self.mpos)
@@ -70,15 +70,15 @@ class CrimeSceneState(State):
             if self.evidence_objs[evidence]['obj'].get_mouse_press():
                 enter_diag = True
                 obj = evidence
-                # Checking to see if it's the first time its getting interacted with
-                if not self.evidence_objs[evidence]['interacted']:
-                    # Update the counter
-                    self.true_counter += 1
-                # Setting to true so that we don't go into this loop 
-                self.evidence_objs[evidence]['interacted'] = True
+                # # Checking to see if it's the first time its getting interacted with
+                # if not self.evidence_objs[evidence]['interacted']:
+                #     # Update the counter
+                #     self.true_counter += 1
+                # # Setting to true so that we don't go into this loop 
+                # self.evidence_objs[evidence]['interacted'] = True
 
         if enter_diag:
-            self.trigger_description_dialogue(obj)
+            trigger_description_dialogue(self.game, self.evidence_objs[obj]['desc'])
 
         self.return_to_street_button.update(self.mpos)
         if self.return_to_street_button.get_mouse_pressed():
@@ -102,19 +102,12 @@ class CrimeSceneState(State):
         # if self.interacted_all_items:
         #     self.return_to_street_button.render(surf)
 
-        if not self.first_enter:
+        if get_flag(self.game, 'house_intro_done'):
             self.return_to_street_button.render(surf)
             for evidence in self.evidence_objs:
                 self.evidence_objs[evidence]['obj'].render(surf)
         if not self.on_background:
             surf.blit(self.cursor_surf, self.mpos)
     
-    def trigger_description_dialogue(self, obj):
-        description_state = DescriptionState(self.game, self.evidence_objs[obj]['desc'])
-        description_state.enter_state()
-        return
-    
-    def trigger_scene_dialogue(self, scene, interaction_id):
-        self.dialogue_box = SceneState(self.game, 'dialogue_test.json', scene, interaction_id)
-        self.dialogue_box.enter_state()
-        return
+    def get_scene_interaction(self, game):
+        return 0

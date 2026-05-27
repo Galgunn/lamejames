@@ -20,6 +20,7 @@ class Game:
         self.transitioning: bool
         self.state_interaction_options: dict
         self.assets: dict
+        self.flags: set
 
         self.test_surf: pygame.Surface
 
@@ -50,8 +51,9 @@ class Game:
             'paultalk': load_image('paultalk.png'),
             'cursor_test': load_image('cursor_test.png'),
             'test_surf': self.test_surf
-
         }
+
+        self.flags = set()
 
         self.testing_keys = {
             'i': False
@@ -79,6 +81,7 @@ class Game:
             self.event_handler()
             self.update()
             self.render()
+            # print(self.flags)
 
     def update(self):
         '''
