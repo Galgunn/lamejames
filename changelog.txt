@@ -1,3 +1,13 @@
+**** pre alpha 0.0.13 **** 5/29 KM
+
+-----CHANGES-----
+added new files -> dialogue_manager.py and aliza_test_new.json
+
+created and added new python and json file to help create our dialogue system data driven
+
+-----WIP-----
+couple of tweaks to existing dialogue state and the remaining dialogue json files will be needed to implement the new dialogue system... hopefully :'v
+
 **** pre alpha 0.0.12 **** 5/27 KM
 
 -----CHANGES-----

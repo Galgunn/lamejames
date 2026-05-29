@@ -1,0 +1,58 @@
+{
+  "interactions": {
+    "intro": {
+      "priority": 0,
+      "requires": [],
+      "flags": ["aliza_intro_done"],
+      "repeatable": false,
+
+      "nodes": {
+        "0": {
+          "speaker": "Aliza",
+          "next_id": "1",
+          "lines": ["Hello detective, how can I help you?"]
+        },
+        "1": {
+          "speaker": "Player",
+          "next_id": "2",
+          "lines": ["Morning.", "Your name is?"]
+        },
+        "2": {
+          "speaker": "Aliza",
+          "next_id": "",
+          "lines": ["My name is Aliza"]
+        }
+      }
+    },
+
+    "repeat": {
+      "priority": 1,
+      "requires": ["aliza_intro_done"],
+      "flags": [],
+      "repeatable": true,
+
+      "nodes": {
+        "0": {
+          "speaker": "Aliza",
+          "next_id": "",
+          "lines": ["Didn't you hear?", "My name is Aliza"]
+        }
+      }
+    },
+
+    "after_evidence": {
+      "priority": 2,
+      "requires": ["visited_crime_scene"],
+      "flags": [],
+      "repeatable": true,
+
+      "nodes": {
+        "0": {
+          "speaker": "Aliza",
+          "next_id": "",
+          "lines": ["Oh... you found something?"]
+        }
+      }
+    }
+  }
+}
