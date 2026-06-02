@@ -50,13 +50,10 @@ class State():
         Docstring for enter_state
 
         Adds the state class to the state stack list in game.py
-        '''
-        if self.game.transitioning:
-            return
-        self.game.transitioning = True
-        
+        '''        
         if len(self.game.state_stack) >= 1:
             self.prev_state = self.game.state_stack[-1]
+            self.prev_state.on_exit()
         self.game.state_stack.append(self)
         self.on_enter()
         
@@ -66,5 +63,8 @@ class State():
         
         Removes the state class from the state stack list in game.py
         '''
-        self.game.state_stack.pop()
         self.on_exit()
+        self.game.state_stack.pop()
+
+        if len(self.game.state_stack) >= 1:
+            self.game.state_stack[-1].on_enter()

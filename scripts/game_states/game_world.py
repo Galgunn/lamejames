@@ -1,11 +1,14 @@
+import pygame, json
 from scripts.state import State
 from scripts.utils import SCREEN_CENTER, SCREEN_SIZE
 from scripts.button_builder import FontButton
+from scripts.dialogue_manager import DialogueManager
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DialogueState, SceneState
 from scripts.game_states.crime_scene_state import CrimeSceneState
 from scripts.state_utils import *
-import pygame
+
+BASE_JSON_PATH: str = 'assets/dialogue/'
 
 pygame.init()
 
@@ -25,7 +28,6 @@ class GameWorld(State):
         self.nate_rect: pygame.FRect
         self.paul_surf: pygame.Surface
         self.paul_rect: pygame.FRect
-        self.dialogue_box = DialogueState
         
         pygame.mouse.set_pos(SCREEN_CENTER)
         self.bg_surf:pygame.Surface = self.game.assets['background']
@@ -40,39 +42,16 @@ class GameWorld(State):
         self.nate_rect:pygame.FRect = self.nate_surf.get_frect(topleft= (250, 425))
         self.paul_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['paulfar'], 3)
         self.paul_rect:pygame.FRect = self.paul_surf.get_frect(topleft= (575, 450))
-        self.dialogue_box = DialogueState(self.game, 'aliza', 'aliza_test.json', 0)
 
         # Variables for dialogue transition 
         self.alpha_value:int = 255
 
-        self.diag_counter: dict = {
-            'aliza': {
-                'counter': 0,
-            },
-            'nate': {
-                'counter': 0,
-            },
-            'paul': {
-                'counter': 0,
-            },
-            'dialogue': {
-                'counter': 0,
-            }
-        }
-
         self.enter_house_button = FontButton(self.game, 'enter house', (100, 100))
-        self.introduction:bool = False
 
     def update(self):
         # Annotate variables
         character_surf: pygame.Surface
         character_name: str
-
-        # test = "ya"
-        # if test:
-        #     print('yep a non empty string is true')
-        # elif test == 'ya':
-        #     print('yep comparing would also be true')
 
         self.nate_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['natefar'], self.natescale)
         mpos = pygame.mouse.get_pos()
@@ -90,10 +69,11 @@ class GameWorld(State):
             character_name = 'paul'
 
         if self.enterdiag == 1:
-            interaction_id = self.get_aliza_interaction(self.game)
-            trigger_character_dialogue(self.game, character_name, interaction_id)
-            self.alpha_value = 255
-            character_surf.set_alpha(self.alpha_value)
+            # interaction_id = self.get_aliza_interaction(self.game)
+            # trigger_character_dialogue(self.game, character_name, interaction_id)
+            # self.alpha_value = 255
+            # character_surf.set_alpha(self.alpha_value)
+            self.start_dialogue(self.game, character_name)
             self.enterdiag = 0
 
         self.enter_house_button.update(mpos)
@@ -125,24 +105,18 @@ class GameWorld(State):
         #         self.nate_rect.y = 425
         #         self.natescale = self.nateoriginscale
         #         self.trigger_dialogue('nate')
-                
-        # if mpos[0] >= int(SCREEN_CENTER[0] + 400): # moving right
-        #     self.bg_rect.x -= 2
-        #     if self.bg_rect.right <= SCREEN_SIZE[0]:
-        #         self.bg_rect.right = SCREEN_SIZE[0]
-        # elif mpos[0] <= int(SCREEN_CENTER[0] - 400): # moving left
-        #     self.bg_rect.x += 2
-        #     if self.bg_rect.left >= 0:
-        #         self.bg_rect.left = 0
 
         if self.game.state_interaction_options['escape']['just_pressed']:
             pause_menu_state = PauseMenu(self.game)
             pause_menu_state.enter_state()
             return
+        
+        self.start_scene(self.game, 'street')
 
-        if get_flag(self.game, 'street_intro_done') == False:
-            interaction_id = self.get_scene_interaction(self.game)
-            trigger_scene_dialogue(self.game, 'street', interaction_id)
+        # if get_flag(self.game, 'street_intro_done') == False:
+        #     self.start_scene(self.game, 'street')
+        # if get_flag(self.game, 'house_intro_done') == True:
+        #     self.start_scene(self.game, 'street')
 
     def render(self, surf):
         surf.blit(self.bg_surf, self.bg_rect)
@@ -151,6 +125,9 @@ class GameWorld(State):
             surf.blit(self.aliza_surf, self.aliza_rect)
             surf.blit(self.nate_surf, self.nate_rect)
             surf.blit(self.paul_surf, self.paul_rect)
+
+    def on_enter(self):
+        print('entered')
 
     def trigger_dialogue_anim(self, character_surf:pygame.Surface, character_name:str):
         self.alpha_value -= 15
@@ -166,3 +143,33 @@ class GameWorld(State):
     
     def get_scene_interaction(self, game):
         return 0
+    
+    def start_dialogue(self, game, char_name:str):
+        f = open(BASE_JSON_PATH + char_name + '.json', 'r')
+        data: dict = json.load(f)
+        f.close()
+
+        manager: DialogueManager = DialogueManager(game)
+        result = manager.select_interaction(data)
+
+        if result is None:
+            return 
+        
+        interaction_key, interaction_data = result
+        dialogue_state = DialogueState(self.game, char_name, interaction_key, interaction_data)
+        dialogue_state.enter_state()
+
+    def start_scene(self, game, scene:str):
+        f = open(BASE_JSON_PATH + 'scences.json', 'r')
+        data: dict = json.load(f)
+        f.close()
+
+        manager: DialogueManager = DialogueManager(game)
+        result = manager.select_scene_interaction(scene, data)
+
+        if result is None:
+            return 
+        
+        interaction_key, interaction_data = result
+        dialogue_state = SceneState(self.game, interaction_key, interaction_data)
+        dialogue_state.enter_state()

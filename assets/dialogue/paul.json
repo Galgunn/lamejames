@@ -1,0 +1,65 @@
+{
+  "intro": {
+    "priority": 0,
+    "requires": [],
+    "flags": ["paul_intro_done"],
+    "repeatable": false,
+
+    "nodes": {
+      "0": {
+          "speaker": "Paul",
+          "next_node": "1",
+          "lines": [
+              "H-hello there..."
+          ]            
+      },
+      "1": {
+          "speaker": "Player",
+          "next_node": "2",
+          "lines": [
+              "Don't be so nervous",
+              "I'm detective, testing and you are?"
+          ]            
+      },
+      "2": {
+          "speaker": "Paul",
+          "next_node": "",
+          "lines": [
+              "I'm Paul, s-sir"
+          ]        
+      }
+    }
+  },
+
+  "repeat": {
+    "priority": 1,
+    "requires": ["paul_intro_done"],
+    "flags": [],
+    "repeatable": true,
+
+    "nodes": {
+      "0": {
+          "speaker": "Paul",
+          "next_node": "",
+          "lines": [
+              "Y-yeah, it's Paul"
+          ]
+      }
+    }
+  },
+
+  "after_evidence": {
+    "priority": 2,
+    "requires": ["visited_crime_scene"],
+    "flags": [],
+    "repeatable": true,
+
+    "nodes": {
+      "0": {
+        "speaker": "Paul",
+        "next_node": "",
+        "lines": ["Oh... you found something?"]
+      }
+    }
+  }
+}

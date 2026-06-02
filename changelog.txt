@@ -1,3 +1,18 @@
+**** pre alpha 0.0.14 **** 6/2 KM
+modified multiple files
+
+-----CHANGES-----
+made changes to a lot of the state classes
+modified to dialogue_manager.py and state.py
+modified dialogue jsons
+
+Implemented new dialogue selection system for all characters and dialogue states excluding description state (will get to)
+
+-----WIP-----   
+Working on implementing the new dialogue selection system to crime_scene_state
+Making changes to state.py to track when a player enters and exits a state, needed to get scene dialogue working properly.
+Minor optimizations loading json's once and only creating one dialogue_manager
+
 **** pre alpha 0.0.13 **** 5/29 KM
 
 -----CHANGES-----

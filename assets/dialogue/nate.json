@@ -1,0 +1,64 @@
+{
+  "intro": {
+    "priority": 0,
+    "requires": [],
+    "flags": ["nate_intro_done"],
+    "repeatable": false,
+
+    "nodes": {
+      "0": {
+          "speaker": "Nate",
+          "next_node": "1",
+          "lines": [
+              "How's it going?"
+          ]
+      },
+      "1": {
+          "speaker": "Player",
+          "next_node": "2",
+          "lines": [
+              "So good so far, your name is?"
+          ]
+      },
+      "2": {
+          "speaker": "Nate",
+          "next_node": "",
+          "lines": [
+              "It's Nate"
+          ]
+      }
+    }
+  },
+
+  "repeat": {
+    "priority": 1,
+    "requires": ["nate_intro_done"],
+    "flags": [],
+    "repeatable": true,
+
+    "nodes": {
+      "0": {
+          "speaker": "Nate",
+          "next_node": "",
+          "lines": [
+              "It's Nate sir..."
+          ]
+      }
+    }
+  },
+
+  "after_evidence": {
+    "priority": 2,
+    "requires": ["visited_crime_scene"],
+    "flags": [],
+    "repeatable": true,
+
+    "nodes": {
+      "0": {
+        "speaker": "Nate",
+        "next_node": "",
+        "lines": ["Oh... you found something?"]
+      }
+    }
+  }
+}

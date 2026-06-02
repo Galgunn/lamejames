@@ -1,0 +1,78 @@
+{
+    "street": {
+        "street_intro": {
+            "priority": 0,
+            "requires": [],
+            "flags": ["street_intro_done"],
+            "repeatable": false,
+            "nodes":{
+                "0": {
+                    "speaker": "",
+                    "next_node": "1",
+                    "lines": [
+                        "A murder has occured in the xyz apartment building",
+                        "You were assigned this case",
+                        "You notice all the tenats are already waiting outside"
+                    ]
+                },
+                "1": {
+                    "speaker": "Player",
+                    "next_node": "",
+                    "lines": [
+                        "Well, here we go..."
+                    ]
+                }
+            }
+
+        },
+        "street_after_house": {
+            "priority": 1,
+            "requires": ["house_intro_done"],
+            "flags": ["returned_to_street"],
+            "repeatable": false,
+            "nodes":{
+                "0": {
+                    "speaker": "",
+                    "next_node": "1",
+                    "lines": [
+                        "You notice someone new"
+                    ]
+                },
+                "1": {
+                    "speaker": "Player",
+                    "next_node": "",
+                    "lines": [
+                        "I didn't see you before"
+                    ]
+                }
+            }
+            
+        }
+    },
+    "house": {
+        "house_intro": {
+            "priority": 0,
+            "requires": [],
+            "flags": ["house_intro_done"],
+            "repeatable": false,
+            "nodes":{
+                "0": {
+                    "speaker": "",
+                    "next_node": "1",
+                    "lines": [
+                        "You enter the building",
+                        "It smells like metal"
+                    ]
+                },
+                "1": {
+                    "speaker": "Player",
+                    "next_node": "",
+                    "lines": [
+                        "I hope I never get used to this smell"
+                    ]
+                }
+            }
+        }
+    }
+
+}

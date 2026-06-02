@@ -1,24 +1,28 @@
 class DialogueManager:
+    """
+    Checks game flags and decides which interactions to run
+    """
     def __init__(self, game):
         self.game = game
 
     def check_conditions(self, data):
-        current_flags = self.game.flags
-        data_flags = data.get('requires', []) # Return empty list if no requires key is found
+        current_flags:set = self.game.flags
+        data_flags:list = data.get('requires', []) # Return empty list if no requires key is found
 
         for req_flag in data_flags: # If data flags is empty list you will not enter for loop
             if req_flag not in current_flags:
                 return False
         return True
     
-    def select_interaction(self, dialogue_json):
+    def select_interaction(self, dialogue_json:dict):
         valid = []
 
-        for key, data in dialogue_json['interactions'].items(): # Tuple unpacking
+        for key, data in dialogue_json.items(): # Tuple unpacking
             repeatable = data.get('repeatable', True) # Return True if no repeatable value is found
 
             if repeatable == False:
                 if key in self.game.used_interactions:
+                    print(key)
                     continue
 
             if self.check_conditions(data):
@@ -29,6 +33,29 @@ class DialogueManager:
         
         # Picks the highest priority data from the list of valid dialogues
         best_key, best_data = max(valid, key=lambda x: x[1].get('priority', 0))
+        return best_key, best_data
+    
+    def select_scene_interaction(self, scene:str, dialogue_json:dict):
+        valid = []
+
+        for key, data in dialogue_json[scene].items(): # Tuple unpacking
+            repeatable = data.get('repeatable', True) # Return True if no repeatable value is found
+            # print(repeatable)
+            if repeatable == False:
+                # print(key)
+                if key in self.game.used_interactions:
+                    # print(key)
+                    continue
+
+            if self.check_conditions(data):
+                valid.append((key, data))
+        
+        if not valid: # if valid is not an empty list
+            return None
+        
+        # Picks the highest priority data from the list of valid dialogues
+        best_key, best_data = max(valid, key=lambda x: x[1].get('priority', 0))
+        # print(valid)
         return best_key, best_data
     
 # example: valid = [('intro', {'priority': 0, ...}), ('repeat', {'priority': 1, ...})]

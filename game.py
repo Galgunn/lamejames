@@ -54,6 +54,7 @@ class Game:
         }
 
         self.flags = set()
+        self.used_interactions = set()
 
         self.testing_keys = {
             'i': False
@@ -72,6 +73,8 @@ class Game:
 
         '''
         while self.running:
+            # print(f"flags: {self.flags}")
+            # print(f"used_flags: {self.used_interactions}")
 
             for key in self.state_interaction_options:
                 self.state_interaction_options[key]['just_pressed'] = False

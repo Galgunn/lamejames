@@ -1,12 +1,15 @@
+import pygame, json
 from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
 from scripts.game_states.dialogue_state import DescriptionState, SceneState
 from scripts.button_builder import SurfaceButton, FontButton
 from scripts.state_utils import trigger_description_dialogue, trigger_scene_dialogue, get_flag
-import pygame
+from scripts.dialogue_manager import DialogueManager
 
 pygame.init()
+
+BASE_JSON_PATH: str = 'assets/dialogue/'
 
 class CrimeSceneState(State):
     def __init__(self, game):
@@ -60,8 +63,7 @@ class CrimeSceneState(State):
         self.on_background = True
 
         if get_flag(self.game, 'house_intro_done') == False:
-            interaction_id = self.get_scene_interaction(self.game)
-            trigger_scene_dialogue(self.game, 'house', interaction_id)
+            self.start_scene(self.game, 'house')
 
         for evidence in self.evidence_objs:
             self.evidence_objs[evidence]['obj'].update(self.mpos)
@@ -111,3 +113,35 @@ class CrimeSceneState(State):
     
     def get_scene_interaction(self, game):
         return 0
+    
+    # def start_dialogue(self, game, filepath, char_name):
+    #     with open(filepath) as f:
+    #         data = json.load(f)
+
+    #     manager = DialogueManager(self.game)
+    #     result = manager.select_interaction(data)
+
+    #     if result is None:
+    #         return 
+        
+    #     interaction_key, interaction_data = result
+
+    #     dialogue_state = 
+
+    def start_scene(self, game, scene:str):
+        f = open(BASE_JSON_PATH + 'scences.json', 'r')
+        data: dict = json.load(f)
+        f.close()
+
+        manager: DialogueManager = DialogueManager(game)
+        result = manager.select_scene_interaction(scene, data)
+
+        if result is None:
+            return 
+        
+        interaction_key, interaction_data = result
+        dialogue_state = SceneState(self.game, interaction_key, interaction_data)
+        dialogue_state.enter_state()
+
+    # def on_exit(self):
+    #     print('out')
