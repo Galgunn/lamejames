@@ -35,7 +35,7 @@ class State():
         
         Mostly an empty/placeholder function can be used to execute something right after enter_state() is called
         '''
-        pass
+        return True
     
     def on_exit(self):
         '''
@@ -43,7 +43,7 @@ class State():
         
         Mostly an empty/placeholder function can be used to excecute something right after exit_state() is called
         '''
-        pass
+        return True
 
     def enter_state(self):
         '''

@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, json
 
 pygame.init()
 
@@ -17,6 +17,7 @@ DISPLAY_CENTER = (DISPLAY_SIZE[0] / 2, DISPLAY_SIZE[1] / 2)
 SCREEN_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 FONT = pygame.font.SysFont('consolas', 20)
 BASE_IMG_PATH = 'assets/images/'
+BASE_JSON_PATH: str = 'assets/dialogue/'
 
 def load_image(path:str, colorkey:tuple=(1, 1, 1)):
     '''
@@ -50,3 +51,10 @@ def load_images(path:str, colorkey:tuple=(1, 1, 1)):
     for img_name in sorted(os.listdir(BASE_IMG_PATH + path)):
         images.append(load_image(path + '/' + img_name, colorkey))
     return images
+
+def load_json(path:str) -> dict:
+        f = open(BASE_JSON_PATH + path, 'r')
+        data: dict = json.load(f)
+        f.close()
+        
+        return data

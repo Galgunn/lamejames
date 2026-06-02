@@ -53,6 +53,13 @@ class Game:
             'test_surf': self.test_surf
         }
 
+        self.dialogue_data = {
+            'aliza': load_json('aliza.json'),
+            'nate': load_json('nate.json'),
+            'paul': load_json('paul.json'),
+            'scenes': load_json('scenes.json')
+        }
+
         self.flags = set()
         self.used_interactions = set()
 

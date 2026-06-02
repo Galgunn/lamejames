@@ -1,3 +1,19 @@
+**** pre alpha 0.0.15 **** 6/2 KM
+
+-----CHANGES-----
+updated state objects -> game_world and crime_scene
+added new variable -> game.py
+updated logic -> state.py
+added new function -> utils.py
+
+implemented optimizations to the way dialogue starts and when does it check if the player has entered the state
+game.py loads dialogue json files and stores them in a dict
+state.py on_enter and on_exit functions return true  when called 
+utils.py has a function that loads json files 
+
+-----WIP-----
+still working on implementing the dialogue_manager/selector for description_state
+
 **** pre alpha 0.0.14 **** 6/2 KM
 modified multiple files
 

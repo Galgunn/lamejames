@@ -57,13 +57,22 @@ class CrimeSceneState(State):
         self.true_counter = 0
         self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
 
+        self.dialogue_manager: DialogueManager = DialogueManager(self.game)
+        self.dialogue_data: dict = {
+            "house": self.game.dialogue_data['scenes']
+        }
+
     def update(self):
+        # Annotate and initialize variables
         enter_diag:bool = False
         self.mpos = pygame.mouse.get_pos()
         self.on_background = True
 
-        if get_flag(self.game, 'house_intro_done') == False:
-            self.start_scene(self.game, 'house')
+        if self.on_enter():
+            self.start_scene('house', self.dialogue_data['house'])
+
+        # if get_flag(self.game, 'house_intro_done') == False:
+        #     self.start_scene(self.game, 'house')
 
         for evidence in self.evidence_objs:
             self.evidence_objs[evidence]['obj'].update(self.mpos)
@@ -88,8 +97,8 @@ class CrimeSceneState(State):
 
 ######### Tried to make the return button to appear after player interacts with all the items
 ######### issue is that it resets the self.interacted_all_items each time 
-        if self.true_counter == len(self.evidence_objs):
-            self.interacted_all_items = True
+        # if self.true_counter == len(self.evidence_objs):
+        #     self.interacted_all_items = True
                 
         # if self.interacted_all_items:        
         #     self.return_to_street_button.update(self.mpos)
@@ -128,13 +137,8 @@ class CrimeSceneState(State):
 
     #     dialogue_state = 
 
-    def start_scene(self, game, scene:str):
-        f = open(BASE_JSON_PATH + 'scences.json', 'r')
-        data: dict = json.load(f)
-        f.close()
-
-        manager: DialogueManager = DialogueManager(game)
-        result = manager.select_scene_interaction(scene, data)
+    def start_scene(self, scene:str, data:dict):
+        result = self.dialogue_manager.select_scene_interaction(scene, data)
 
         if result is None:
             return 

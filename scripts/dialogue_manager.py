@@ -37,7 +37,8 @@ class DialogueManager:
     
     def select_scene_interaction(self, scene:str, dialogue_json:dict):
         valid = []
-
+        # print(f"scene: {scene}")
+        # print(f"json: {dialogue_json}")
         for key, data in dialogue_json[scene].items(): # Tuple unpacking
             repeatable = data.get('repeatable', True) # Return True if no repeatable value is found
             # print(repeatable)
