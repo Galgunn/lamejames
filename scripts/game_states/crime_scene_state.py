@@ -2,7 +2,7 @@ import pygame, json
 from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.pause_state import PauseMenu
-from scripts.game_states.dialogue_state import DescriptionState, SceneState
+from scripts.game_states.dialogue_states import DescriptionState, SceneState
 from scripts.button_builder import SurfaceButton, FontButton
 from scripts.state_utils import trigger_description_dialogue, trigger_scene_dialogue, get_flag
 from scripts.dialogue_manager import DialogueManager

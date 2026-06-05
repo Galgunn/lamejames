@@ -1,4 +1,4 @@
-from scripts.game_states.dialogue_state import SceneState, DialogueState, DescriptionState
+from scripts.game_states.dialogue_states import SceneState, DialogueState, DescriptionState
 
 def get_flag(game, flag:str) -> bool:
         if flag in game.flags:

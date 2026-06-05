@@ -1,3 +1,13 @@
+**** pre alpha 0.0.16 **** 6/5 KM
+
+-----CHANGES-----
+added new files -> scene_state, talking_state,  and inspect_state
+
+split up dialogue_states into their own states
+
+-----WIP-----
+implement the new states into the main game loop states
+
 **** pre alpha 0.0.15 **** 6/2 KM
 
 -----CHANGES-----

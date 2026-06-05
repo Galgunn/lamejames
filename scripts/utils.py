@@ -18,6 +18,8 @@ SCREEN_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 FONT = pygame.font.SysFont('consolas', 20)
 BASE_IMG_PATH = 'assets/images/'
 BASE_JSON_PATH: str = 'assets/dialogue/'
+DIALOGUE_BOX_SIZE:tuple = (SCREEN_SIZE[0], 200)
+DIALOGUE_BOX_POS:tuple = (0, 600)
 
 def load_image(path:str, colorkey:tuple=(1, 1, 1)):
     '''

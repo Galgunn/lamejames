@@ -4,7 +4,7 @@ from scripts.utils import SCREEN_CENTER, SCREEN_SIZE
 from scripts.button_builder import FontButton
 from scripts.dialogue_manager import DialogueManager
 from scripts.game_states.pause_state import PauseMenu
-from scripts.game_states.dialogue_state import DialogueState, SceneState
+from scripts.game_states.dialogue_states import DialogueState, SceneState
 from scripts.game_states.crime_scene_state import CrimeSceneState
 from scripts.state_utils import *
 
