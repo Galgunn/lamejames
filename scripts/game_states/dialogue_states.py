@@ -1,4 +1,6 @@
-import json
+'''
+Not necessary anymore had to split it 
+'''
 import pygame
 from scripts.state import State
 from scripts.dialogue_system import DialogueSystem

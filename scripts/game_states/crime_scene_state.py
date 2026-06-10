@@ -6,6 +6,7 @@ from scripts.game_states.dialogue_states import DescriptionState, SceneState
 from scripts.button_builder import SurfaceButton, FontButton
 from scripts.state_utils import trigger_description_dialogue, trigger_scene_dialogue, get_flag
 from scripts.dialogue_manager import DialogueManager
+from scripts.game_states.inspect_state import InspectState
 
 pygame.init()
 
@@ -35,26 +36,16 @@ class CrimeSceneState(State):
         self.on_background = True
 
         self.evidence_objs = {
-            'test': {
+            'box1': {
                 'obj': SurfaceButton(self.game, self.game.assets['test_surf'], (300, 300)),
-                'desc': [
-                    'Hopefully this works', 
-                    'pls work'
-                ],
-                'interacted': False
+                'data': self.game.dialogue_data['evidence']['box1'],
             },
-            'test1': {
+            'box2': {
                 'obj': SurfaceButton(self.game, self.game.assets['test_surf'], (100, 100)),
-                'desc': [
-                    "This is another box",
-                    "Tee hee ^o^"
-                ],
-                'interacted': False
+                'data': self.game.dialogue_data['evidence']['box2'],
             }
         }
 
-        self.interacted_all_items = False
-        self.true_counter = 0
         self.return_to_street_button: FontButton = FontButton(self.game, 'return to street', (900, 700))
 
         self.dialogue_manager: DialogueManager = DialogueManager(self.game)
@@ -80,7 +71,7 @@ class CrimeSceneState(State):
                 self.on_background = False
             if self.evidence_objs[evidence]['obj'].get_mouse_press():
                 enter_diag = True
-                obj = evidence
+                evidence_inspected = evidence
                 # # Checking to see if it's the first time its getting interacted with
                 # if not self.evidence_objs[evidence]['interacted']:
                 #     # Update the counter
@@ -89,7 +80,7 @@ class CrimeSceneState(State):
                 # self.evidence_objs[evidence]['interacted'] = True
 
         if enter_diag:
-            trigger_description_dialogue(self.game, self.evidence_objs[obj]['desc'])
+            self.start_inspect(evidence, self.evidence_objs[evidence_inspected]['data'])
 
         self.return_to_street_button.update(self.mpos)
         if self.return_to_street_button.get_mouse_pressed():
@@ -120,9 +111,6 @@ class CrimeSceneState(State):
         if not self.on_background:
             surf.blit(self.cursor_surf, self.mpos)
     
-    def get_scene_interaction(self, game):
-        return 0
-    
     # def start_dialogue(self, game, filepath, char_name):
     #     with open(filepath) as f:
     #         data = json.load(f)
@@ -145,6 +133,10 @@ class CrimeSceneState(State):
         
         interaction_key, interaction_data = result
         dialogue_state = SceneState(self.game, interaction_key, interaction_data)
+        dialogue_state.enter_state()
+
+    def start_inspect(self, evidence:str, data:dict):
+        dialogue_state = InspectState(self.game, evidence, data)
         dialogue_state.enter_state()
 
     # def on_exit(self):

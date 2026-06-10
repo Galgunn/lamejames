@@ -57,7 +57,7 @@ class DialogueManager:
         # Picks the highest priority data from the list of valid dialogues
         best_key, best_data = max(valid, key=lambda x: x[1].get('priority', 0))
         # print(valid)
-        return best_key, best_data
+        return best_key, best_data        
     
 # example: valid = [('intro', {'priority': 0, ...}), ('repeat', {'priority': 1, ...})]
 # key is an optional argument in the max() function which lets you modify an object before comparison or compare based on specific index/attribute

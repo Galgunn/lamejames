@@ -41,7 +41,7 @@
 
   "after_evidence": {
     "priority": 2,
-    "requires": ["visited_crime_scene"],
+    "requires": ["aliza_intro_done", "returned_to_street"],
     "flags": [],
     "repeatable": true,
 

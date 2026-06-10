@@ -1,3 +1,15 @@
+**** pre alpha 0.0.17 **** 6/10 KM
+
+-----CHANGES-----
+modified files
+
+finished implementing new dialogue json structure to all dialogue jsons
+finished implementing new dialogue selector
+
+-----WIP-----
+find a way to implement evidence inventory system or find a way to make rendered text a different color to symbolize
+that it is important.
+
 **** pre alpha 0.0.16 **** 6/5 KM
 
 -----CHANGES-----

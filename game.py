@@ -57,7 +57,8 @@ class Game:
             'aliza': load_json('aliza.json'),
             'nate': load_json('nate.json'),
             'paul': load_json('paul.json'),
-            'scenes': load_json('scenes.json')
+            'scenes': load_json('scenes.json'),
+            'evidence': load_json('evidence.json')
         }
 
         self.flags = set()

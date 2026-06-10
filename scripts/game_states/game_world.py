@@ -8,8 +8,6 @@ from scripts.game_states.dialogue_states import DialogueState, SceneState
 from scripts.game_states.crime_scene_state import CrimeSceneState
 from scripts.state_utils import *
 
-BASE_JSON_PATH: str = 'assets/dialogue/'
-
 pygame.init()
 
 class GameWorld(State):

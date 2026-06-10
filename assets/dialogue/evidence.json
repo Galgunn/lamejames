@@ -1,0 +1,31 @@
+{
+    "box1": {
+        "requires": [],
+        "flags": ["first_box_interacted"],
+        "repeatable": true,
+        "nodes": {
+            "0": {
+                "speaker": "",
+                "next_node": "",
+                "lines": [
+                    "It's a box",
+                    "Weirdly shaped tho"
+                ]
+            }
+        }
+    },
+    "box2": {
+        "requires": [],
+        "flags": ["second_box_interacted"],
+        "repeatable": true,
+        "nodes": {
+            "0": {
+                "speaker": "",
+                "next_node": "",
+                "lines": [
+                    "It's another box"
+                ]
+            }
+        }
+    }
+}
