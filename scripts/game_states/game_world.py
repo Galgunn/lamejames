@@ -53,11 +53,14 @@ class GameWorld(State):
         # character_surf: pygame.Surface
         character_name: str
 
+        mpos = pygame.mouse.get_pos()
+        self.enter_house_button.update(mpos)
+        self.nate_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['natefar'], self.natescale)
+
         if self.on_enter():
+            print('on enter')
             self.start_scene('street', self.dialogue_data['street'])
 
-        self.nate_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['natefar'], self.natescale)
-        mpos = pygame.mouse.get_pos()
         if self.aliza_rect.collidepoint(mpos) and self.game.state_interaction_options['left_click']['just_pressed']:
             self.enterdiag = 1 
             character_surf = self.aliza_surf
@@ -79,7 +82,6 @@ class GameWorld(State):
             self.start_dialogue(character_name, self.dialogue_data[character_name])
             self.enterdiag = 0
 
-        self.enter_house_button.update(mpos)
         if  self.enter_house_button.get_mouse_pressed():
             self.crime_scene_state = CrimeSceneState(self.game)
             self.crime_scene_state.enter_state()
@@ -126,12 +128,6 @@ class GameWorld(State):
             surf.blit(self.aliza_surf, self.aliza_rect)
             surf.blit(self.nate_surf, self.nate_rect)
             surf.blit(self.paul_surf, self.paul_rect)
-
-    def on_enter(self):
-        return True
-    
-    def on_exit(self):
-        return True
 
     def trigger_dialogue_anim(self, character_surf:pygame.Surface, character_name:str):
         self.alpha_value -= 15

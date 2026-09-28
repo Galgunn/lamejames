@@ -9,17 +9,24 @@
       "0": {
         "speaker": "Aliza",
         "next_node": "1",
-        "lines": ["Hello detective, how can I help you?"]
+        "lines": [
+          {"text": "Hello detective, how can I help you?", "keyline": false}
+        ]
       },
       "1": {
         "speaker": "Player",
         "next_node": "2",
-        "lines": ["Morning.", "Your name is?"]
+        "lines": [
+          {"text": "Morning", "keyline": false},
+          {"text": "Your name is?", "keyline": false}
+        ]
       },
       "2": {
         "speaker": "Aliza",
         "next_node": "",
-        "lines": ["My name is Aliza"]
+        "lines": [
+          {"text": "My name is Aliza", "keyline": true}
+        ]
       }
     }
   },
@@ -34,7 +41,10 @@
       "0": {
         "speaker": "Aliza",
         "next_node": "",
-        "lines": ["Didn't you hear?", "My name is Aliza"]
+        "lines": [
+          {"text": "Didn't you hear?", "keyline": false},
+          {"text": "My name is Aliza", "keyline": false}
+        ]
       }
     }
   },
@@ -49,7 +59,9 @@
       "0": {
         "speaker": "Aliza",
         "next_node": "",
-        "lines": ["Oh... you found something?"]
+        "lines": [
+          {"text": "Oh... you found something?", "keyline": false}
+        ]
       }
     }
   }

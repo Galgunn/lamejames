@@ -179,4 +179,7 @@ class FontButton():
         if self.game.state_interaction_options['left_click']['just_pressed'] and self.font_dict[self.text]['on_font']:
             return True
         return False
+
+    def reset(self):
+        self.font_dict[self.text]['on_font'] = False
     

@@ -25,8 +25,10 @@ class Game:
         self.test_surf: pygame.Surface
 
         # Initializing variables
-        self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]))
-        self.display = pygame.Surface((SCREEN_SIZE[0], SCREEN_SIZE[1]))
+        self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]), pygame.SCALED)
+        # self.screen = pygame.display.set_mode((2000, 1500))
+        self.display = pygame.Surface((SCREEN_SIZE[0], SCREEN_SIZE[1]), pygame.SCALED)
+        # self.display = pygame.Surface((2000, 1500))
         self.clock = pygame.time.Clock()
         self.running = True
         self.state_stack = []

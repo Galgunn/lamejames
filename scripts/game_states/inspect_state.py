@@ -66,6 +66,7 @@ class InspectState(State):
 
     def render(self, surf):
         # self.prev_state.render(surf) # type: ignore error due to prev state being None
+        pygame.mouse.set_visible(True)
         self.dialogue_box_rect.topleft = DIALOGUE_BOX_POS
         if self.speaker_name != "":
             surf.blit(self.speaker_name_surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y - 25))

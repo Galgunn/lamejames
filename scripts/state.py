@@ -10,6 +10,8 @@ class State():
         '''
         self.game = game
         self.prev_state = None
+        self.state_entered:bool = False
+        self.state_exited:bool = False
 
     def update(self):
         '''
@@ -17,7 +19,8 @@ class State():
         
         Empty function. Here is where we want to check for any collisions, player input, variable changes, etc...
         '''
-        pass
+        self.state_entered = False
+        self.state_exited = False
 
     def render(self, surf:pygame.Surface):
         '''
@@ -35,7 +38,7 @@ class State():
         
         Mostly an empty/placeholder function can be used to execute something right after enter_state() is called
         '''
-        return True
+        return self.state_entered
     
     def on_exit(self):
         '''
@@ -43,7 +46,7 @@ class State():
         
         Mostly an empty/placeholder function can be used to excecute something right after exit_state() is called
         '''
-        return True
+        return self.state_exited
 
     def enter_state(self):
         '''
@@ -55,7 +58,7 @@ class State():
             self.prev_state = self.game.state_stack[-1]
             self.prev_state.on_exit()
         self.game.state_stack.append(self)
-        self.on_enter()
+        self.state_entered = True
         
     def exit_state(self):
         '''
@@ -63,7 +66,7 @@ class State():
         
         Removes the state class from the state stack list in game.py
         '''
-        self.on_exit()
+        self.state_exited = True
         self.game.state_stack.pop()
 
         if len(self.game.state_stack) >= 1:
