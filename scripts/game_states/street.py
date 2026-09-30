@@ -25,6 +25,7 @@ class Street(State):
         pygame.mouse.set_pos(SCREEN_CENTER)
         # self.bg_surf = self.game.assets['background']
         self.bg_surf = pygame.Surface((100, 200))
+        self.bg_surf.fill(255, 200, 200)
         self.cursor_surf = self.game.assets['cursor_test']
         self.cursor_rect = self.cursor_surf.get_frect()
         self.talking = False

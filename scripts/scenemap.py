@@ -13,6 +13,10 @@ class Scenemap():
         self.scene_name = ''
         self.scene_map = []
 
+    def get_interactable_rect(self) -> list:
+        rects = []
+
+
     def save(self, scene_name, path):
         f = open(path, 'w')
         json.dump({'scene_name': scene_name, 'scene_map' : self.scene_map}, f)

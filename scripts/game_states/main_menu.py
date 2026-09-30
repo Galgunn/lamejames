@@ -2,6 +2,7 @@ from scripts.state import State
 from scripts.utils import *
 from scripts.game_states.game_world import GameWorld
 from scripts.game_states.street import Street
+from scripts.game_states.street_test import StreetTest
 # from scripts.game_states.setting_menu import SettingMenu
 # from scripts.game_states.credits_state import Credits 
 from scripts.button_builder import MenuBuilder
@@ -20,7 +21,7 @@ class MainMenu(State):
         mpos = pygame.mouse.get_pos()
         self.font_options.update(mpos)
         if self.font_options.get_mouse_pressed('Start'):
-            game_running_state = Street(self.game)
+            game_running_state = StreetTest(self.game)
             game_running_state.enter_state()
         if self.font_options.get_mouse_pressed('Settings'):
             # settings_menu_state = SettingMenu(self.game)
