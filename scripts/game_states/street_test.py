@@ -6,6 +6,8 @@ from scripts.dialogue_manager import DialogueManager
 from scripts.game_states.talking_state import TalkingState
 from scripts.game_states.dialogue_states import DialogueState
 from scripts.game_states.scene_state import SceneState
+from scripts.pointer import Pointer
+from scripts.scenemap import Scenemap
 
 pygame.init()
 
@@ -23,16 +25,21 @@ class StreetTest(State):
 
         # What im focusing on
         self.scenemap: list # a list of dicts containing data like surfaces (i.e. background and characters), and rects
+        self.scene_map = Scenemap(self.game)
+        self.cursor = Pointer(game, pygame.mouse.get_pos(), game.assets['cursor_test'])
 
         # Initializing variables
         pygame.mouse.set_pos(SCREEN_CENTER)
 
         # What im focusing on as
         # dict data structure is {type: str, pos: tuple, size: tuple} EXCLUDE width and height is the type in non interactable
-        self.scenemap = [
-            {'type': 'background', 'pos': (0, 0)},
-            {'type': 'alizafar', 'pos': (50, 50), 'size': (25, 25)}
-        ]
+        # self.scenemap = [
+        #     {'type': 'background', 'pos': (0, 0)},
+        #     {'type': 'alizafar', 'pos': (50, 50), 'size': (25, 25)}
+        # ]
+        # self.scenemap.append({'type': 'alizafar', 'pos': (50, 50), 'size': self.game.assets['alizafar']})
+
+        # print(self.scenemap)
 
         # self.bg_surf = self.game.assets['background']
         # self.bg_surf = pygame.Surface((100, 200))
@@ -61,7 +68,7 @@ class StreetTest(State):
         # dialogue_data: dict
         # mpos: tuple
 
-        # mpos = pygame.mouse.get_pos()
+        mpos = pygame.mouse.get_pos()
 
         # for character in self.characters:
         #     self.characters[character]['surf'].update(mpos)
@@ -73,11 +80,14 @@ class StreetTest(State):
         # if self.talking:
         #     self.start_dialogue(character_name, dialogue_data)
         #     self.talking = False
-        pass
+        self.cursor.update(self.scene_map, mpos)
 
     def render(self, surf):
-        for obj in self.scenemap:
-             surf.blit(self.game.assets[obj['type']], (obj['pos'][0], obj['pos'][1]))
+        self.scene_map.render(surf)
+        # for obj in self.scenemap:
+        #     surf.blit(self.game.assets[obj['type']], (obj['pos'][0], obj['pos'][1]))
+        #     if obj['type'] == 'alizafar':
+        #         pygame.draw.rect(surf, (0, 0, 0), pygame.FRect(obj['pos'][0], obj['pos'][1], obj['size'][0], obj['size'][1]))
 
     # def start_dialogue(self, char_name:str, data:dict):
     #         result = self.dialogue_manager.select_interaction(data)

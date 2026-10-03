@@ -1,6 +1,7 @@
 import pygame, json
 
 BASE_SCENEMAP_PATH: str = 'assets/scene_maps/'
+INTERACTABLE: set = {'far_characters', 'alizafar'}
 
 class Scenemap():
     def __init__(self, game):
@@ -13,8 +14,17 @@ class Scenemap():
         self.scene_name = ''
         self.scene_map = []
 
-    def get_interactable_rect(self) -> list:
+        self.scene_map = [
+            {'type': 'background', 'pos': (0, 0)},
+            {'type': 'alizafar', 'pos': (50, 50), 'size': (25, 25)}
+        ]
+
+    def get_interactable_surfs(self) -> list:
         rects = []
+        for surf in self.scene_map:
+            if surf['type'] in INTERACTABLE:
+                rects.append(pygame.FRect(surf['pos'][0], surf['pos'][1], surf['size'][0], surf['size'][1]))
+        return rects
 
 
     def save(self, scene_name, path):

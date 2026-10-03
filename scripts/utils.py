@@ -36,7 +36,7 @@ def load_image(path:str, colorkey:tuple=(1, 1, 1)):
     img.set_colorkey(colorkey)
     return img
 
-def load_images(path:str, colorkey:tuple=(1, 1, 1)):
+def load_images(path:str, colorkey:tuple = (1, 1, 1), sorted:bool = False):
     '''
     Docstring for load_images
     
@@ -50,8 +50,12 @@ def load_images(path:str, colorkey:tuple=(1, 1, 1)):
     Returns -> a list containing the pygame.Surface objects
     '''
     images = []
-    for img_name in sorted(os.listdir(BASE_IMG_PATH + path)):
-        images.append(load_image(path + '/' + img_name, colorkey))
+    if sorted:
+        for img_name in sorted(os.listdir(BASE_IMG_PATH + path)):
+            images.append(load_image(path + '/' + img_name, colorkey))
+    else:
+        for img_name in os.listdir(BASE_IMG_PATH + dir):
+            images.append(load_image(dir + '/' + img_name, colorkey))
     return images
 
 def load_json(path:str) -> dict:

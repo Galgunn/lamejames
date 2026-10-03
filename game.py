@@ -45,11 +45,11 @@ class Game:
 
         self.assets = {
             'background': load_image('salem.png'),
-            'alizafar': load_image('alizafar.png'),
+            'alizafar': load_image('far_characters/alizafar.png'),
             'alizatalk': load_image('alizatalk.png'),
-            'natefar': load_image('natefar.png'),
+            'natefar': load_image('far_characters/natefar.png'),
             'natetalk': load_image('natetalk.png'),
-            'paulfar': load_image('paulfar.png'),
+            'paulfar': load_image('far_characters/paulfar.png'),
             'paultalk': load_image('paultalk.png'),
             'cursor_test': load_image('cursor_test.png'),
             'test_surf': self.test_surf
