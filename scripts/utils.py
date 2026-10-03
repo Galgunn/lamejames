@@ -9,6 +9,8 @@ SCREEN_CENTER: tuple
 DISPLAY_CENTER: tuple
 FONT: pygame.Font
 BASE_IMG_PATH: str
+BASE_IMG_PATH_EDITOR: str
+BASE_SCENE_MAP_PATH: str
 
 # Initialize constants
 SCREEN_SIZE = (1000, 750)
@@ -16,7 +18,9 @@ DISPLAY_SIZE = (1000, 750)
 DISPLAY_CENTER = (DISPLAY_SIZE[0] / 2, DISPLAY_SIZE[1] / 2)
 SCREEN_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 FONT = pygame.font.SysFont('consolas', 20)
-BASE_IMG_PATH = 'assets/images/'
+BASE_IMG_PATH = 'assets_editor/images/'
+BASE_IMG_PATH_EDITOR = 'assets_editor/images/'
+BASE_SCENE_MAP_PATH = 'assets_editor/scenes/'
 BASE_JSON_PATH: str = 'assets/dialogue/'
 DIALOGUE_BOX_SIZE:tuple = (SCREEN_SIZE[0], 200)
 DIALOGUE_BOX_POS:tuple = (0, 600)
@@ -54,8 +58,8 @@ def load_images(path:str, colorkey:tuple = (1, 1, 1), sorted:bool = False):
         for img_name in sorted(os.listdir(BASE_IMG_PATH + path)):
             images.append(load_image(path + '/' + img_name, colorkey))
     else:
-        for img_name in os.listdir(BASE_IMG_PATH + dir):
-            images.append(load_image(dir + '/' + img_name, colorkey))
+        for img_name in os.listdir(BASE_IMG_PATH + path):
+            images.append(load_image(path + '/' + img_name, colorkey))
     return images
 
 def load_json(path:str) -> dict:
@@ -64,3 +68,9 @@ def load_json(path:str) -> dict:
         f.close()
         
         return data
+
+def load_maps():
+    maps = []
+    for map_name in os.listdir(BASE_SCENE_MAP_PATH):
+        maps.append(map_name.split('.')[0])
+    return maps

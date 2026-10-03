@@ -1,6 +1,6 @@
 import pygame, json
 
-BASE_SCENEMAP_PATH: str = 'assets/scene_maps/'
+BASE_SCENEMAP_PATH: str = 'assets_editor/scenes/'
 INTERACTABLE: set = {'far_characters', 'alizafar'}
 
 class Scenemap():
@@ -12,34 +12,28 @@ class Scenemap():
         # Initialize variables
         self.game = game
         self.scene_name = ''
-        self.scene_map = []
-
-        self.scene_map = [
-            {'type': 'background', 'pos': (0, 0)},
-            {'type': 'alizafar', 'pos': (50, 50), 'size': (25, 25)}
-        ]
+        self.scenemap = []
 
     def get_interactable_surfs(self) -> list:
         rects = []
-        for surf in self.scene_map:
+        for surf in self.scenemap:
             if surf['type'] in INTERACTABLE:
                 rects.append(pygame.FRect(surf['pos'][0], surf['pos'][1], surf['size'][0], surf['size'][1]))
         return rects
 
-
-    def save(self, scene_name, path):
-        f = open(path, 'w')
-        json.dump({'scene_name': scene_name, 'scene_map' : self.scene_map}, f)
+    def save(self, scene_name):
+        f = open(BASE_SCENEMAP_PATH + scene_name + '.json', 'w')
+        json.dump({'scene_name': scene_name, 'scene_map' : self.scenemap}, f)
         f.close()
 
-    def load(self, path):
-        f = open(path, 'r')
+    def load(self, scene_name):
+        f = open(BASE_SCENEMAP_PATH + scene_name + '.json', 'r')
         scene_data = json.load(f)
         f.close()
 
         self.scene_name = scene_data['scene_name']
-        self.scene_map = scene_data['scene_map']
+        self.scenemap = scene_data['scene_map']
 
     def render(self, surf):
-        for obj in self.scene_map:
-            surf.blit(self.game.assets[obj['type']], (obj['pos'][0], obj['pos'][1]))
+        for obj in self.scenemap:
+            surf.blit(self.game.assets[obj['type']][obj['variant']], (obj['pos'][0], obj['pos'][1]))
