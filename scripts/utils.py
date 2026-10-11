@@ -67,18 +67,6 @@ def load_json(path:str) -> dict:
         
         return data
 
-def get_maps():
-    maps = []
-    for map_name in os.listdir(BASE_SCENE_MAP_PATH):
-        maps.append(map_name.split('.')[0])
-    return maps
-
-def get_backgrounds():
-    bgs = []
-    for bg in os.listdir(BASE_IMG_PATH + 'backgrounds'):
-        bgs.append(bg.split('.')[0])
-    return bgs
-
 def get_file_names(path:str) -> list:
     filenames = []
     for file in os.listdir(path):

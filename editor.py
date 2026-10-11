@@ -1,8 +1,8 @@
 import pygame, sys
 import tkinter as tk
-from tkinter import ttk, Toplevel
+from tkinter import ttk
 from scripts.scenemap import Scenemap
-from scripts.utils import SCREEN_SIZE, load_image, load_images, get_maps, get_backgrounds, get_file_names
+from scripts.utils import SCREEN_SIZE, load_image, load_images, get_file_names
 
 pygame.init()
 
@@ -28,9 +28,8 @@ class Editor():
         self.right_click: bool
         self.shift: bool
         self.ctrl:bool
-
-        self.saving: bool
-        self.map_name: str
+        self.scene_name: str
+        self.bg: str
 
         # Initializing variables
         pygame.display.set_caption('Scene Editor')
@@ -51,7 +50,6 @@ class Editor():
                 self.bg_list.append(type)
                 continue
             self.surf_list.append(type)
-        # self.surf_list = list(self.assets)
         self.surf_type = 0
         self.surf_variant = 0
         self.bg_variant = 0
@@ -61,7 +59,6 @@ class Editor():
         self.shift = False
         self.ctrl = False
 
-        self.saving = False
         self.scene_name = 'untitled'
         self.bg = 'none'
 
@@ -72,10 +69,8 @@ class Editor():
 
             current_surf_img = self.assets[self.surf_list[self.surf_type]][self.surf_variant].copy()
             current_surf_img.set_alpha(100)
-            # current_bg_img = self.assets[self.bg_list[0]][self.surf_variant].copy()
 
             mpos = pygame.mouse.get_pos()
-            # self.display.blit(current_bg_img, (0, 0))
             self.display.blit(current_surf_img, mpos)
 
             if self.left_click:
@@ -141,15 +136,13 @@ class Editor():
 
                         # creating funcs
                         def apply():
-                            bgs = self.assets['backgrounds']
                             self.bg = bg_var.get()
-                            print(bgs)
-                            self.bg_variant = bgs.index(self.bg)
-
+                            self.bg_variant = int(backgrounds.index(self.bg)) - 1
                             self.scenemap.scene_bg.append({
                                 'variant': self.bg_variant,
-                                'pos': (0, 0)
+                                'pos': (-1, -1)
                             })
+                            tk.Label(root, text=f"The background '{self.bg}' has been applied!").grid(row=2, column=0, columnspan=4)
 
                         def save():
                             self.scene_name = scene_var.get()
@@ -164,6 +157,7 @@ class Editor():
                                     self.scenemap.save(self.scene_name)
                                     tk.Label(root, text=f"The map '{self.scene_name}' has been updated!").grid(row=2, column=0, columnspan=4)
                                 else:
+                                    self.scenemap.save(self.scene_name)
                                     tk.Label(root, text=f"The map '{self.scene_name}' has been saved!").grid(row=2, column=0, columnspan=4)
 
                         def open():
@@ -174,7 +168,7 @@ class Editor():
                                 tk.Label(root, text=f"The map '{self.scene_name}' does not exist. Try again.").grid(row=2, column=0, columnspan=4)
                                 scene_var.set('')
                             except:
-                                tk.Label(root, text=f"The map '{self.scene_name}' is facing another error. Import traceback and call print_exc().").grid(row=2, column=0, columnspan=4)
+                                tk.Label(root, text=f"The map '{self.scene_name}' is facing an error. Import traceback and call print_exc().").grid(row=2, column=0, columnspan=4)
                             else:
                                 tk.Label(root, text=f"The map '{self.scene_name}' loaded succesfully!").grid(row=2, column=0, columnspan=4)
 
@@ -197,10 +191,6 @@ class Editor():
 
                         # Display menu
                         root.mainloop()
-
-                        # print(self.scenemap.scene_name)
-                        # print(self.scenemap.scene_bg)
-                        # print(self.scenemap.scene_map)
                                 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LSHIFT or pygame.K_RSHIFT:

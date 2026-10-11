@@ -1,3 +1,14 @@
+**** pre alpha 0.1.17 **** 10/11 KM
+
+NOTES
+Created a scene editor that can help create scenemaps. Each scenemap contains data about the scene name and 
+surf data such as type and pos. A cursor object will need scenemap data to proceed with the game.
+
+What I need to do now is implement the scenes into the game, have the cursor object retrieve that data and check for
+collisions with certain surfs in the scene. Will need to figure out how to handle dialogue, switch scenes, and item descriptions
+after interacting with a surf.
+
+
 **** pre alpha 0.0.17 **** 6/10 KM
 
 -----CHANGES-----
