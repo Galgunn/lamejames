@@ -1,4 +1,4 @@
-**** pre alpha 0.1.20 **** 10/14 KM
+**** pre alpha 0.1.21 **** 10/14 KM
 
 ----NOTES----
 Finished getting collision for the cursor object now need to handle mousebuttonup events when a player clicks on a character. Thinking of creating
