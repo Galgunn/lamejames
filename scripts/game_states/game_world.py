@@ -25,21 +25,26 @@ class GameWorld(State):
 
         # What im focusing on
         self.game = game
-        self.scenemap: list # a list of dicts containing data like surfaces (i.e. background and characters), and rects
-        self.scene_map = Scenemap(self.game)
+        self.scenemap = Scenemap(self.game)
         self.scene_map.load('street')
         self.cursor = Cursor(game, pygame.mouse.get_pos(), self.game.assets['cursor_default'])
 
         # Initializing variables
         pygame.mouse.set_visible(False)
         pygame.mouse.set_pos(SCREEN_CENTER)
+        self.characters = {}
+        for asset in self.scenemap.scene_map:
+            if asset['type'] == 'character_far':
+                pass 
 
     def update(self):
         mpos = pygame.mouse.get_pos()
-        self.cursor.update(self.scene_map, mpos)
+        self.cursor.update(self.scenemap, mpos)
+
+        
 
     def render(self, surf):
-        self.scene_map.render(surf)
+        self.scenemap.render(surf)
         self.cursor.render(surf)
 
         

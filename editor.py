@@ -119,7 +119,7 @@ class Editor():
                         self.ctrl = True
 
                     if event.key == pygame.K_m:
-                        backgrounds:list = get_file_names('assets_editor/images/backgrounds')
+                        backgrounds:list = get_file_names('assets/images/backgrounds')
                         backgrounds.insert(0, 'none')
 
                         # Creating tkinter window

@@ -1,3 +1,10 @@
+**** pre alpha 0.1.22 **** 10/15 KM
+
+---NOTES---
+Fixed small issue with the cursor and getting items around the mouse pos.
+
+Working on how to check when a player clicks on a character and start the dialogue for that character.
+
 **** pre alpha 0.1.21 **** 10/14 KM
 
 ----NOTES----

@@ -16,15 +16,21 @@ class Scenemap():
         self.scene_bg = []
         self.scene_map = []
 
-    def get_rects_around(self, pos:tuple):
-        rects = []
+    def get_asset_around(self, pos:tuple):
+        assets = []
         cursor_rect = pygame.FRect(0, 0, 75, 75)
         cursor_rect.center = pos
-        for surf in self.scene_map:
-            if surf['type'] in INTERACTABLE:
-                surf_rect = pygame.FRect(surf['pos'][0], surf['pos'][1], surf['size'][0], surf['size'][1])
-                if surf_rect.colliderect(cursor_rect):
-                    rects.append(surf_rect)
+        for asset in self.scene_map:
+            asset_rect = pygame.FRect(asset['pos'][0], asset['pos'][1], asset['size'][0], asset['size'][1])
+            if asset_rect.colliderect(cursor_rect):
+                assets.append(asset)
+        return assets
+
+    def get_rects_around(self, pos:tuple):
+        rects = []
+        for asset in self.get_asset_around(pos):
+            if asset['type'] in INTERACTABLE:
+                rects.append(pygame.FRect(asset['pos'][0], asset['pos'][1], asset['size'][0], asset['size'][1]))    
         return rects
 
     def save(self, scene_name):
