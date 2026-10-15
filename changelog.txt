@@ -1,3 +1,9 @@
+**** pre alpha 0.1.20 **** 10/14 KM
+
+----NOTES----
+Finished getting collision for the cursor object now need to handle mousebuttonup events when a player clicks on a character. Thinking of creating
+a textbox state to handle character dialogue and item description.
+
 **** pre alpha 0.1.17 **** 10/11 KM
 
 NOTES

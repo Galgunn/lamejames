@@ -44,15 +44,11 @@ class Game:
         }
 
         self.assets = {
-            'background': load_image('salem.png'),
-            'alizafar': load_image('far_characters/alizafar.png'),
-            'alizatalk': load_image('alizatalk.png'),
-            'natefar': load_image('far_characters/natefar.png'),
-            'natetalk': load_image('natetalk.png'),
-            'paulfar': load_image('far_characters/paulfar.png'),
-            'paultalk': load_image('paultalk.png'),
-            'cursor_test': load_image('cursor_test.png'),
-            'test_surf': self.test_surf
+            'characters_far': load_images('characters_far'),
+            'characters_talking': load_images('characters_talking'),
+            'backgrounds': load_images("backgrounds"),
+            'cursor_default': load_image('cursors/cursor_default.png'),
+            'cursor_magnify': load_image('cursors/cursor_magnify.png')
         }
 
         self.dialogue_data = {

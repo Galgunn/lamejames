@@ -1,19 +1,21 @@
 import pygame
 from scripts.scenemap import Scenemap
 
-class Pointer():
+class Cursor():
     def __init__(self, game, pos, surf):
         self.game = game
         self.pos = pos
         self.surf = surf
 
-    def update(self, scenemap, pos):
+    def update(self, scenemap:Scenemap, pos:tuple):
         self.pos = pos
 
         # Checking for any rect collisions to update the pointer image
-        for rect in scenemap.get_interactable_surfs():
+        for rect in scenemap.get_rects_around(self.pos):
             if rect.collidepoint(self.pos):
-                print('collision')
+                self.surf = self.game.assets['cursor_magnify']
+            else:
+                self.surf = self.game.assets['cursor_default']
 
         # Checking for any MOUSEBUTTONUP events and rect collision with other objects
         pass

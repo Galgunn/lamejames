@@ -6,8 +6,6 @@ from scripts.utils import SCREEN_SIZE, load_image, load_images, get_file_names
 
 pygame.init()
 
-BASE_MAP_PATH: str = 'assets_editor/scenes/'
-
 class Editor():
     def __init__(self):
         '''
