@@ -1,3 +1,8 @@
+*** pre alpha 0.1.23 *** 10/19 KM
+
+---NOTES---
+Adding file name to asset data and also gotta add removing assets from scene in editor
+
 **** pre alpha 0.1.22 **** 10/15 KM
 
 ---NOTES---

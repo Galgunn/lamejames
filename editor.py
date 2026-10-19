@@ -2,7 +2,7 @@ import pygame, sys
 import tkinter as tk
 from tkinter import ttk
 from scripts.scenemap import Scenemap
-from scripts.utils import SCREEN_SIZE, load_image, load_images, get_file_names
+from scripts.utils import SCREEN_SIZE, load_images, get_file_names, BASE_IMG_PATH
 
 pygame.init()
 
@@ -85,7 +85,9 @@ class Editor():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: # Left click
                         self.left_click = True
+                        print(get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant])
                         self.scenemap.scene_map.append({
+                            'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
                             'type': self.surf_list[self.surf_type], 
                             'variant': self.surf_variant, 
                             'pos': (mpos[0], mpos[1]), 
@@ -119,7 +121,7 @@ class Editor():
                         self.ctrl = True
 
                     if event.key == pygame.K_m:
-                        backgrounds:list = get_file_names('assets/images/backgrounds')
+                        backgrounds:list = get_file_names(BASE_IMG_PATH + 'backgrounds')
                         backgrounds.insert(0, 'none')
 
                         # Creating tkinter window

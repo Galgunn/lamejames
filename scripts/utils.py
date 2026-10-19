@@ -17,8 +17,8 @@ DISPLAY_SIZE = (1000, 750)
 DISPLAY_CENTER = (DISPLAY_SIZE[0] / 2, DISPLAY_SIZE[1] / 2)
 SCREEN_CENTER = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1] / 2)
 FONT = pygame.font.SysFont('consolas', 20)
-BASE_IMG_PATH = 'assets/images/'
-BASE_SCENE_MAP_PATH = 'assets/scenes/'
+BASE_IMG_PATH:str = 'assets/images/'
+BASE_SCENE_MAP_PATH:str = 'assets/scenes/'
 BASE_JSON_PATH: str = 'assets/dialogue/'
 DIALOGUE_BOX_SIZE:tuple = (SCREEN_SIZE[0], 200)
 DIALOGUE_BOX_POS:tuple = (0, 600)
@@ -67,8 +67,8 @@ def load_json(path:str) -> dict:
         
         return data
 
-def get_file_names(path:str) -> list:
+def get_file_names(path:str, delimiter:str='.') -> list:
     filenames = []
     for file in os.listdir(path):
-        filenames.append(file.split('.')[0])
+        filenames.append(file.split(delimiter)[0])
     return filenames

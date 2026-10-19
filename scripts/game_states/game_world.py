@@ -1,6 +1,6 @@
 import pygame
 from scripts.state import State
-from scripts.utils import SCREEN_CENTER, SCREEN_SIZE
+from scripts.utils import SCREEN_CENTER, SCREEN_SIZE, get_file_names
 from scripts.button_builder import FontButton, SurfaceButton
 from scripts.dialogue_manager import DialogueManager
 from scripts.game_states.talking_state import TalkingState
@@ -26,7 +26,7 @@ class GameWorld(State):
         # What im focusing on
         self.game = game
         self.scenemap = Scenemap(self.game)
-        self.scene_map.load('street')
+        self.scenemap.load('street')
         self.cursor = Cursor(game, pygame.mouse.get_pos(), self.game.assets['cursor_default'])
 
         # Initializing variables
@@ -36,6 +36,10 @@ class GameWorld(State):
         for asset in self.scenemap.scene_map:
             if asset['type'] == 'character_far':
                 pass 
+        list1 = get_file_names('assets/images/characters_far', '_')
+
+        print(self.characters)
+        print(list1)
 
     def update(self):
         mpos = pygame.mouse.get_pos()
