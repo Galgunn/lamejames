@@ -3,7 +3,7 @@ Not necessary anymore had to split it
 '''
 import pygame
 from scripts.state import State
-from scripts.dialogue_system import DialogueSystem
+from scripts.scrolling_text import DialogueSystem
 from scripts.dialogue_manager import DialogueManager
 from scripts.utils import SCREEN_SIZE, FONT
 

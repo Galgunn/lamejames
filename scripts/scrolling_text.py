@@ -1,9 +1,7 @@
 from scripts.utils import FONT
 import pygame
 
-BASE_JSON_PATH:str = 'assets/dialogue/dialogue_'
-
-class DialogueSystem:
+class ScrollingText:
     '''
     In charge of just getting what str to render and what paremeters ex. color to render the text
     '''

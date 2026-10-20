@@ -17,7 +17,7 @@ class DialogueManager:
     def select_interaction(self, dialogue_json:dict):
         valid = []
 
-        for key, data in dialogue_json.items(): # Tuple unpacking
+        for key, data in dialogue_json.items(): # Tuple unpacking / items() creates a list of tuples with each tuple being a key value pair
             repeatable = data.get('repeatable', True) # Return True if no repeatable value is found
 
             if repeatable == False:
@@ -39,7 +39,7 @@ class DialogueManager:
         valid = []
         # print(f"scene: {scene}")
         # print(f"json: {dialogue_json}")
-        for key, data in dialogue_json[scene].items(): # Tuple unpacking
+        for key, data in dialogue_json[scene].items(): # Tuple unpacking / items() creates a list of tuples with each tuple being a key value pair
             repeatable = data.get('repeatable', True) # Return True if no repeatable value is found
             # print(repeatable)
             if repeatable == False:

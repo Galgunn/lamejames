@@ -1,7 +1,7 @@
 import pygame, json
-from scripts.utils import BASE_SCENE_MAP_PATH
+from scripts.utils import BASE_SCENE_MAP_PATH, INTERACTABLE_ASSET_TYPES
 
-INTERACTABLE: set = {'characters_far'}
+# INTERACTABLE: set = {'characters_far'}
 
 class Scenemap():
     def __init__(self, game):
@@ -16,7 +16,7 @@ class Scenemap():
         self.scene_bg = []
         self.scene_map = []
 
-    def get_asset_around(self, pos:tuple):
+    def get_assets_around(self, pos:tuple):
         assets = []
         cursor_rect = pygame.FRect(0, 0, 75, 75)
         cursor_rect.center = pos
@@ -28,8 +28,8 @@ class Scenemap():
 
     def get_rects_around(self, pos:tuple):
         rects = []
-        for asset in self.get_asset_around(pos):
-            if asset['type'] in INTERACTABLE:
+        for asset in self.get_assets_around(pos):
+            if asset['type'] in INTERACTABLE_ASSET_TYPES:
                 rects.append(pygame.FRect(asset['pos'][0], asset['pos'][1], asset['size'][0], asset['size'][1]))    
         return rects
 

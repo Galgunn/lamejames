@@ -1,3 +1,15 @@
+*** pre alpha 0.1.24 ** 10/19 KM
+
+---NOTES---
+asset data now contains:
+    -name
+    -type
+    -variant
+    -pos
+    -size 
+Editor can now remove assets from a scenemap. Currently working on a textbox state that be in charge of displaying text whenever a player
+clicks on a character or evidence object. Right now try to refigure out how the old dialogue states work and modulize them. 
+
 *** pre alpha 0.1.23 *** 10/19 KM
 
 ---NOTES---

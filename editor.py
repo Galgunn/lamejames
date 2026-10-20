@@ -75,7 +75,11 @@ class Editor():
                 pass
 
             if self.right_click:
-                pass
+                for asset in self.scenemap.scene_map.copy():
+                    asset_surf:pygame.Surface = self.assets[asset['type']][asset['variant']]
+                    asset_rect:pygame.FRect = pygame.FRect(asset['pos'][0], asset['pos'][1], asset_surf.get_width(), asset_surf.get_height())
+                    if asset_rect.collidepoint(mpos):
+                        self.scenemap.scene_map.remove(asset)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

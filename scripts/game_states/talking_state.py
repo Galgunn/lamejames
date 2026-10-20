@@ -1,6 +1,6 @@
 import pygame
 from scripts.state import State
-from scripts.dialogue_system import DialogueSystem
+from scripts.scrolling_text import DialogueSystem
 from scripts.utils import FONT, DIALOGUE_BOX_POS, DIALOGUE_BOX_SIZE
 
 CHARACTER_TALKING_POS: tuple = (650, 100)
