@@ -89,7 +89,7 @@ class Editor():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: # Left click
                         self.left_click = True
-                        print(get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant])
+                        print(self.assets[self.surf_type][self.surf_variant])
                         self.scenemap.scene_map.append({
                             'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
                             'type': self.surf_list[self.surf_type], 

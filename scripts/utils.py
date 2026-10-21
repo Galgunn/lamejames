@@ -13,6 +13,7 @@ BASE_SCENE_MAP_PATH: str
 BASE_JSON_PATH: str
 DIALOGUE_BOX_SIZE: tuple
 DIALOGUE_BOX_POS: tuple
+CHARACTER_TALKING_POS:tuple = (650, 100)
 INTERACTABLE_ASSET_TYPES: set
 
 # Initialize constants
@@ -24,8 +25,8 @@ FONT = pygame.font.SysFont('consolas', 20)
 BASE_IMG_PATH= 'assets/images/'
 BASE_SCENE_MAP_PATH = 'assets/scenes/'
 BASE_JSON_PATH = 'assets/dialogue/'
-DIALOGUE_BOX_SIZE = (SCREEN_SIZE[0], 200)
-DIALOGUE_BOX_POS = (0, 600)
+TEXT_BOX_POS = (0, 600)
+TEXT_BOX_SIZE = (SCREEN_SIZE[0], 200)
 INTERACTABLE_ASSET_TYPES = {'characters_far', 'characters_talking'}
 
 def load_image(path:str, colorkey:tuple=(1, 1, 1)):

@@ -16,6 +16,8 @@ class MainMenu(State):
         self.font_options = MenuBuilder(self.game, self.menu_text_options, SCREEN_CENTER)
         self.font_dict = self.font_options.get_font_dict()
 
+        self.game.scenemap.load('street')
+
     def update(self):
         mpos = pygame.mouse.get_pos()
         self.font_options.update(mpos)
@@ -35,4 +37,5 @@ class MainMenu(State):
 
     def render(self, surf):
         surf.fill(('green'))
+        self.game.scenemap.render(surf)
         self.font_options.render(surf)

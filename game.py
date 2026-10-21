@@ -1,6 +1,8 @@
 import pygame, sys
 from scripts.utils import *
 from scripts.game_states.main_menu import MainMenu
+from scripts.cursor import Cursor
+from scripts.scenemap import Scenemap
 
 pygame.init()
 
@@ -23,6 +25,8 @@ class Game:
         self.flags: set
 
         self.test_surf: pygame.Surface
+        self.cursor: Cursor
+        self.scenemap:Scenemap
 
         # Initializing variables
         self.screen = pygame.display.set_mode((SCREEN_SIZE[0], SCREEN_SIZE[1]), pygame.SCALED)
@@ -67,6 +71,9 @@ class Game:
         }
 
         self.load_state()
+        self.cursor = Cursor(self, SCREEN_CENTER, self.assets['cursor_default'])
+        self.scenemap = Scenemap(self)
+        self.scenemap.load(None)
 
     def run(self):
         '''
@@ -78,6 +85,8 @@ class Game:
         - Calls update() and render() for state objects in the state stack
 
         '''
+        self.cursor.update()
+        
         while self.running:
             # print(f"flags: {self.flags}")
             # print(f"used_flags: {self.used_interactions}")
