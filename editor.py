@@ -89,7 +89,6 @@ class Editor():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: # Left click
                         self.left_click = True
-                        print(self.assets[self.surf_type][self.surf_variant])
                         self.scenemap.scene_map.append({
                             'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
                             'type': self.surf_list[self.surf_type], 
@@ -142,16 +141,23 @@ class Editor():
                         def apply():
                             self.bg = bg_var.get()
                             self.bg_variant = int(backgrounds.index(self.bg)) - 1
-                            self.scenemap.scene_bg.append({
-                                'variant': self.bg_variant,
-                                'pos': (-1, -1)
-                            })
+                            if not self.scenemap.scene_bg:
+                                self.scenemap.scene_bg.append({
+                                    'variant': self.bg_variant,
+                                    'pos': (0, 0)
+                                })
+                            else:
+                                self.scenemap.scene_bg[0] = {
+                                    'variant': self.bg_variant,
+                                    'pos': (0, 0)
+                                }
+                            print(self.scenemap.scene_bg)
                             tk.Label(root, text=f"The background '{self.bg}' has been applied!").grid(row=2, column=0, columnspan=4)
 
                         def save():
                             self.scene_name = scene_var.get()
                             self.bg = bg_var.get()
-                            scenes = get_file_names('assets_editor/scenes')
+                            scenes = get_file_names('assets/scenes')
 
                             if not scenes: # Scenes list is empty
                                 self.scenemap.save(self.scene_name)

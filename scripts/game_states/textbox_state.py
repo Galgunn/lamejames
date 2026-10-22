@@ -17,6 +17,8 @@ class Textbox(State):
         super().__init__(game)
         # Annotate and initialize variables
         self.game = game
+        self.scenemap:Scenemap = Scenemap(self.game)
+        self.cursor:Cursor = cursor
         self.asset:dict = asset
         self.interaction_key:str = interaction_key
         self.interaction_data:dict = interaction_data
@@ -24,18 +26,18 @@ class Textbox(State):
         self.current_node:str = '0'
         self.next_node:str = ''
         self.speaker_name:str = ''
+        self.speaker_name_surf:pygame.Surface
+        self.speaker_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets['characters_talking'][self.asset['variant']], 1.5)
         self.lines:list = []
         self.flags:str = ''
         self.text_color:str = ''
-        self.dialogue_box_rect:pygame.FRect = pygame.FRect(TEXT_BOX_POS, TEXT_BOX_SIZE)
+        self.textbox_rect:pygame.FRect = pygame.FRect(TEXT_BOX_POS, TEXT_BOX_SIZE)
         self.scrolling_text:ScrollingText = ScrollingText(self.game, SCREEN_SIZE[0], 2)
-
-        self.scenemap:Scenemap = Scenemap(self.game)
-        self.scenemap.load('weezer')
-        self.cursor:Cursor = cursor
         
         self.load_nodes()
         self.scrolling_text.get_lines(self.lines, self.text_color)
+
+        print(self.asset)
 
     def update(self):
             mpos = pygame.mouse.get_pos()
@@ -58,12 +60,11 @@ class Textbox(State):
     
     def render(self, surf):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
-        self.scenemap.render(surf)
-        self.dialogue_box_rect.topleft = (0, 600)
-        # surf.blit(self.character_surf, CHARACTER_TALKING_POS)
-        # surf.blit(self.speaker_name_surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y - 25))
-        pygame.draw.rect(surf, ('black'), self.dialogue_box_rect)
-        self.scrolling_text.render(surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y + 10))
+        # self.dialogue_box_rect.topleft = (0, 600)
+        surf.blit(self.speaker_surf, CHARACTER_TALKING_POS)
+        surf.blit(self.speaker_name_surf, (self.textbox_rect.x + 10, self.textbox_rect.y - 25))
+        pygame.draw.rect(surf, ('black'), self.textbox_rect)
+        self.scrolling_text.render(surf, (self.textbox_rect.x + 10, self.textbox_rect.y + 10))
         self.cursor.render(surf)
 
     def load_nodes(self):
@@ -72,6 +73,7 @@ class Textbox(State):
         self.lines = self.interaction_nodes[self.current_node]['lines']
         self.flags = self.interaction_data['flags']
         self.text_color = CHARACTER_FONT_COLORS[self.speaker_name]
+        self.speaker_name_surf = FONT.render(self.speaker_name, True, self.text_color, (0, 0, 0))
 
     def get_next_node(self):
         self.current_node = self.next_node
