@@ -6,9 +6,7 @@ from scripts.cursor import Cursor
 from scripts.scenemap import Scenemap
 from scripts.game_states.textbox_state import Textbox
 
-pygame.init()
-
-class GameWorld(State):
+class GameState(State):
     def __init__(self, game):
         super().__init__(game)
 
@@ -48,13 +46,11 @@ class GameWorld(State):
 
     def start_interaction(self, asset:dict, asset_dialogue:dict):
         # Annotating and initializing variable
-        print(asset_dialogue)
         result:tuple = self.dialogue_manager.select_interaction(asset_dialogue)
-        print(result)
         if result is None:
                 return 
         interaction_key = result[0]
         interaction_data = result[1]
 
-        self.textbox_state = Textbox(self.game, asset, interaction_key, interaction_data)
+        self.textbox_state = Textbox(self.game, self.cursor, asset, interaction_key, interaction_data)
         self.textbox_state.enter_state()

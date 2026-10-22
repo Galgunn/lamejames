@@ -3,6 +3,7 @@ from scripts.utils import SCREEN_SIZE, TEXT_BOX_POS, FONT, TEXT_BOX_SIZE, CHARAC
 from scripts.state import State
 from scripts.scrolling_text import ScrollingText
 from scripts.cursor import Cursor
+from scripts.scenemap import Scenemap
 
 CHARACTER_FONT_COLORS:dict = {
     'Aliza': (157, 232, 202),
@@ -12,7 +13,7 @@ CHARACTER_FONT_COLORS:dict = {
 }
 
 class Textbox(State):
-    def __init__(self, game, asset:dict, interaction_key:str, interaction_data:dict):
+    def __init__(self, game, cursor:Cursor, asset:dict, interaction_key:str, interaction_data:dict):
         super().__init__(game)
         # Annotate and initialize variables
         self.game = game
@@ -27,15 +28,18 @@ class Textbox(State):
         self.flags:str = ''
         self.text_color:str = ''
         self.dialogue_box_rect:pygame.FRect = pygame.FRect(TEXT_BOX_POS, TEXT_BOX_SIZE)
-        self.scrolling_text:ScrollingText = ScrollingText(self.game, SCREEN_SIZE[0])
-        self.cursor = Cursor(self.game, (0, 0), self.game.assets['cursor_default'])
+        self.scrolling_text:ScrollingText = ScrollingText(self.game, SCREEN_SIZE[0], 2)
 
+        self.scenemap:Scenemap = Scenemap(self.game)
+        self.scenemap.load('weezer')
+        self.cursor:Cursor = cursor
+        
         self.load_nodes()
         self.scrolling_text.get_lines(self.lines, self.text_color)
 
     def update(self):
             mpos = pygame.mouse.get_pos()
-            self.cursor.update_interaction(mpos)
+            self.cursor.update(self.scenemap, mpos)
             self.scrolling_text.update()
     
             if self.game.state_interaction_options['left_click']['just_pressed']:
@@ -54,6 +58,7 @@ class Textbox(State):
     
     def render(self, surf):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
+        self.scenemap.render(surf)
         self.dialogue_box_rect.topleft = (0, 600)
         # surf.blit(self.character_surf, CHARACTER_TALKING_POS)
         # surf.blit(self.speaker_name_surf, (self.dialogue_box_rect.x + 10, self.dialogue_box_rect.y - 25))

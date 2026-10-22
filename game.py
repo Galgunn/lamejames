@@ -71,9 +71,6 @@ class Game:
         }
 
         self.load_state()
-        self.cursor = Cursor(self, SCREEN_CENTER, self.assets['cursor_default'])
-        self.scenemap = Scenemap(self)
-        self.scenemap.load(None)
 
     def run(self):
         '''
@@ -85,7 +82,6 @@ class Game:
         - Calls update() and render() for state objects in the state stack
 
         '''
-        self.cursor.update()
         
         while self.running:
             # print(f"flags: {self.flags}")

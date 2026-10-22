@@ -60,7 +60,6 @@ class ScrollingText:
         - Checks if dialogue is complete
         - Creates a surface object thats updates each letter (need better understanding of this)
         '''
-        print(self.current_line)
         # Handles the type writer effect
         if self.counter < self.speed * len(self.line):
             self.counter += 1
@@ -115,12 +114,12 @@ class ScrollingText:
         self.text_color = color
         self.reset()
         
-        print(self.current_line) # 4 testing
         if type(self.dialogue_lines[self.current_line]) == dict:
             self.contains_dicts = True
             self.line = self.dialogue_lines[self.current_line]['text']
             if self.dialogue_lines[self.current_line]['keyline'] == True:
-                self.text_color = (255, 0, 0)
+                # self.text_color = (255, 0, 0)
+                pass
             else: 
                 self.text_color = color
         else:

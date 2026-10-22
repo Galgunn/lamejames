@@ -33,12 +33,12 @@ class Scenemap():
                 rects.append(pygame.FRect(asset['pos'][0], asset['pos'][1], asset['size'][0], asset['size'][1]))    
         return rects
 
-    def save(self, scene_name):
+    def save(self, scene_name:str):
         f = open(BASE_SCENE_MAP_PATH + scene_name + '.json', 'w')
         json.dump({'scene_name': scene_name, 'scene_bg': self.scene_bg, 'scene_map' : self.scene_map}, f)
         f.close()
 
-    def load(self, scene_name):
+    def load(self, scene_name:str):
         f = open(BASE_SCENE_MAP_PATH + scene_name + '.json', 'r')
         scene_data = json.load(f)
         f.close()
