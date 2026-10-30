@@ -38,7 +38,8 @@ class Editor():
         self.assets = {
             'characters_far': load_images('characters_far'),
             'characters_talking': load_images('characters_talking'),
-            'backgrounds': load_images("backgrounds")
+            'backgrounds': load_images("backgrounds"),
+            'evidence': load_images('evidence')
         }
         self.scenemap = Scenemap(self)
         self.surf_list = []

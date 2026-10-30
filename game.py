@@ -52,7 +52,8 @@ class Game:
             'characters_talking': load_images('characters_talking'),
             'backgrounds': load_images("backgrounds"),
             'cursor_default': load_image('cursors/cursor_default.png'),
-            'cursor_magnify': load_image('cursors/cursor_magnify.png')
+            'cursor_magnify': load_image('cursors/cursor_magnify.png'),
+            'evidence': load_images('evidence')
         }
 
         self.dialogue_data = {

@@ -1,15 +1,15 @@
 {
-    "box1": {
+    "wallet": {
         "requires": [],
-        "flags": ["first_box_interacted"],
+        "flags": ["wallet_interacted"],
         "repeatable": true,
         "nodes": {
             "0": {
                 "speaker": "",
                 "next_node": "",
                 "lines": [
-                    "It's a box",
-                    "Weirdly shaped tho"
+                    "It's a wallet",
+                    "Looks like theres a bit of blood on it"
                 ]
             }
         }
