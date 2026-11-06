@@ -5,7 +5,7 @@
         "repeatable": true,
         "nodes": {
             "0": {
-                "speaker": "",
+                "speaker": "None",
                 "next_node": "",
                 "lines": [
                     "It's a wallet",
@@ -20,7 +20,7 @@
         "repeatable": true,
         "nodes": {
             "0": {
-                "speaker": "",
+                "speaker": "None",
                 "next_node": "",
                 "lines": [
                     "It's another box"

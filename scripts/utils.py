@@ -27,7 +27,7 @@ BASE_SCENE_MAP_PATH = 'assets/scenes/'
 BASE_JSON_PATH = 'assets/dialogue/'
 TEXT_BOX_POS = (0, 600)
 TEXT_BOX_SIZE = (SCREEN_SIZE[0], 200)
-INTERACTABLE_ASSET_TYPES = {'characters_far', 'characters_talking'}
+INTERACTABLE_ASSET_TYPES = {'characters_far', 'evidence_far'}
 
 def load_image(path:str, colorkey:tuple=(1, 1, 1)):
     '''
@@ -69,8 +69,12 @@ def load_json(path:str) -> dict:
         
         return data
 
-def get_file_names(path:str, delimiter:str='.') -> list:
+def get_file_names(path:str, seperator:str=None) -> list:
     filenames = []
     for file in sorted(os.listdir(path)):
-        filenames.append(file.split(delimiter)[0])
+        filename:str = file.split('.')[0]
+        if seperator == None:
+             filenames.append(filename)
+        else:
+            filenames.append(filename.split(seperator)[0])
     return filenames

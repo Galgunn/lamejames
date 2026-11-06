@@ -49,11 +49,12 @@ class Game:
 
         self.assets = {
             'characters_far': load_images('characters_far'),
-            'characters_talking': load_images('characters_talking'),
+            'characters_close': load_images('characters_close'),
             'backgrounds': load_images("backgrounds"),
             'cursor_default': load_image('cursors/cursor_default.png'),
             'cursor_magnify': load_image('cursors/cursor_magnify.png'),
-            'evidence': load_images('evidence')
+            'evidence_far': load_images('evidence_far'),
+            'evidence_close': load_images('evidence_close')
         }
 
         self.dialogue_data = {
@@ -61,7 +62,7 @@ class Game:
             'nate': load_json('nate.json'),
             'paul': load_json('paul.json'),
             'scenes': load_json('scenes.json'),
-            'evidence': load_json('evidence.json')
+            'evidence_far': load_json('evidence.json'),
         }
 
         self.flags = set()

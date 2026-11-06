@@ -37,9 +37,9 @@ class Editor():
         self.running = True
         self.assets = {
             'characters_far': load_images('characters_far'),
-            'characters_talking': load_images('characters_talking'),
+            'characters_close': load_images('characters_close'),
             'backgrounds': load_images("backgrounds"),
-            'evidence': load_images('evidence')
+            'evidence_far': load_images('evidence_far')
         }
         self.scenemap = Scenemap(self)
         self.surf_list = []
@@ -60,6 +60,8 @@ class Editor():
 
         self.scene_name = 'untitled'
         self.bg = 'none'
+
+        # print(self.assets['backgrounds'])
 
     def run(self):
         while self.running:
@@ -92,7 +94,8 @@ class Editor():
                         self.left_click = True
                         self.scenemap.scene_map.append({
                             'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
-                            'type': self.surf_list[self.surf_type], 
+                            'type': self.surf_list[self.surf_type],
+                            'subtype': self.surf_list[self.surf_type].split('_')[0],
                             'variant': self.surf_variant, 
                             'pos': (mpos[0], mpos[1]), 
                             'size': pygame.Surface.get_size(self.assets[self.surf_list[self.surf_type]][self.surf_variant])
@@ -126,6 +129,7 @@ class Editor():
 
                     if event.key == pygame.K_m:
                         backgrounds:list = get_file_names(BASE_IMG_PATH + 'backgrounds')
+                        print(backgrounds)
                         backgrounds.insert(0, 'none')
 
                         # Creating tkinter window

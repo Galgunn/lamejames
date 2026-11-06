@@ -1,3 +1,11 @@
+*** pre alpha 0.1.29 *** 11/2 KM
+
+Still working on implementing the appropritate logic when player clicks on a certain asset (character or evicence).
+
+---NOTES---
+Will need to probably make textbox its own class and 2 different states. The 2 states will have different variables passed
+depending if its a character or a evidence object that the player clicked on.
+
 *** pre alpha 0.1.28 *** 10/24 KM
 
 Working on implementing logic when player clicks on a evidence asset. 

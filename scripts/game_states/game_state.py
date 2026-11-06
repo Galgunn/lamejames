@@ -34,28 +34,31 @@ class GameState(State):
             if asset['type'] in INTERACTABLE_ASSET_TYPES:
                 asset_rect = pygame.FRect(asset['pos'], asset['size'])
                 if asset_rect.collidepoint(mpos) and self.game.state_interaction_options['left_click']['just_pressed'] == True:
-                    asset_dialogue = self.game.dialogue_data[asset['name']]
                     interacting = True
 
         if interacting:
-            self.start_interaction(asset, asset_dialogue)
+            self.start_interaction(asset)
             interacting = False
 
     def render(self, surf):
         self.scenemap.render(surf)
         self.cursor.render(surf)
 
-    def start_interaction(self, asset:dict, asset_dialogue:dict):
+    def start_interaction(self, asset:dict):
         # Annotating and initializing variable
-        if asset['type'] == 'character_far':
+        asset_dialogue:dict = {}
+
+        if asset['type'] == 'characters_far':
+            asset_dialogue = self.game.dialogue_data[asset['name']]
             result:tuple = self.dialogue_manager.select_interaction(asset_dialogue)
             if result is None:
                     return 
             interaction_key = result[0]
             interaction_data = result[1]
-            textbox_state = Textbox(self.game, self.cursor, asset, interaction_key, interaction_data)
-        elif asset['type'] == 'evidence':
+            textbox_state = Textbox(self.game, self.cursor, asset['subtype'], asset['variant'], interaction_key, interaction_data)
+        elif asset['type'] == 'evidence_far':
+            asset_dialogue = self.game.dialogue_data[asset['type']]
             interaction_key = asset_dialogue[asset['name']]
-            textbox_state = Textbox(self.game, self.cursor, asset, )
+            textbox_state = Textbox(self.game, self.cursor, asset['subtype'], asset['variant'], asset['name'], asset_dialogue[asset['name']])
 
         textbox_state.enter_state()
