@@ -1,5 +1,5 @@
 import pygame
-from scripts.utils import SCREEN_SIZE, TEXT_BOX_POS, FONT, TEXT_BOX_SIZE, CHARACTER_TALKING_POS
+from scripts.utils import SCREEN_SIZE, TEXT_BOX_POS, FONT, TEXT_BOX_SIZE
 from scripts.state import State
 from scripts.scrolling_text import ScrollingText
 from scripts.cursor import Cursor
@@ -27,7 +27,6 @@ class Textbox(State):
         self.lines:list = []
         self.flags:str = ''
         self.text_color:tuple = (255, 255, 255)
-        self.textbox_rect:pygame.FRect = pygame.FRect(TEXT_BOX_POS, TEXT_BOX_SIZE)
         self.scrolling_text:ScrollingText = ScrollingText(self.game, SCREEN_SIZE[0], 2)
         self.is_character:bool = False
         self.asset_surf:pygame.Surface
@@ -39,6 +38,12 @@ class Textbox(State):
             self.asset_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[asset_subtype + '_close'][asset_variant], 1.5)
         else:
             self.asset_surf:pygame.Surface = pygame.transform.scale_by(self.game.assets[asset_subtype + '_close'][asset_variant], 5)
+
+        # self.blit_pos = ((SCREEN_SIZE[0] // 2) - (self.asset_surf.get_width() // 2), 100)
+        self.blit_pos = ((SCREEN_SIZE[0] // 2) - (self.asset_surf.get_width() // 2), (SCREEN_SIZE[1] // 2) - (self.asset_surf.get_height() // 2))
+        self.bg_filter = pygame.Surface(SCREEN_SIZE)
+        self.bg_filter.set_alpha(100)
+        self.textbox_rect:pygame.FRect = pygame.FRect(TEXT_BOX_POS, TEXT_BOX_SIZE)
         
         self.load_nodes()
         self.scrolling_text.get_lines(self.lines, self.text_color)
@@ -66,10 +71,10 @@ class Textbox(State):
     
     def render(self, surf):
         self.prev_state.render(surf) # type: ignore error due to prev state being None
+        surf.blit(self.bg_filter, (0, 0))
         if self.is_character:
-            # self.dialogue_box_rect.topleft = (0, 600)
             surf.blit(self.speaker_name_surf, (self.textbox_rect.x + 10, self.textbox_rect.y - 25))
-        surf.blit(self.asset_surf, CHARACTER_TALKING_POS)
+        surf.blit(self.asset_surf, self.blit_pos)
         pygame.draw.rect(surf, ('black'), self.textbox_rect)
         self.scrolling_text.render(surf, (self.textbox_rect.x + 10, self.textbox_rect.y + 10))
         self.cursor.render(surf)

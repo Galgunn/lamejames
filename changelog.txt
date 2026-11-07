@@ -1,3 +1,19 @@
+*** pre alpha 0.1.31 *** 11/6 KM
+
+Implemented logic whenever a player clicks on a character or evidence asset.
+Changed blit pos for textbox_state asset surfaces
+Added small background darkening whenever your in textbox state
+
+---NOTES---
+Start working on logic to change the scenemap whenever player clicks on the asset.
+i.e. click on a door asset surface to "enter the house"
+Next thing to look at implementing is a inventory state to check collected evidence
+
+*** pre alpha 0.1.30 *** 11/6 KM
+
+I believe I finished implementing the logic whenever a player clicks on a character or evidence object.
+Will need to fix placement on evidence objects
+
 *** pre alpha 0.1.29 *** 11/2 KM
 
 Still working on implementing the appropritate logic when player clicks on a certain asset (character or evicence).
