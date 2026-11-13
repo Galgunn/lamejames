@@ -54,7 +54,8 @@ class Game:
             'cursor_default': load_image('cursors/cursor_default.png'),
             'cursor_magnify': load_image('cursors/cursor_magnify.png'),
             'evidence_far': load_images('evidence_far'),
-            'evidence_close': load_images('evidence_close')
+            'evidence_close': load_images('evidence_close'),
+            'bg_interactables': load_images('bg_interactables')
         }
 
         self.dialogue_data = {

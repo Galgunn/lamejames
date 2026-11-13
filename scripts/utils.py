@@ -27,7 +27,7 @@ BASE_SCENE_MAP_PATH = 'assets/scenes/'
 BASE_JSON_PATH = 'assets/dialogue/'
 TEXT_BOX_POS = (0, 600)
 TEXT_BOX_SIZE = (SCREEN_SIZE[0], 200)
-INTERACTABLE_ASSET_TYPES = {'characters_far', 'evidence_far'}
+INTERACTABLE_ASSET_TYPES = {'characters_far', 'evidence_far', 'bg_interactables'}
 
 def load_image(path:str, colorkey:tuple=(1, 1, 1)):
     '''

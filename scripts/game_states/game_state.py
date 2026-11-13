@@ -40,6 +40,8 @@ class GameState(State):
             self.start_interaction(asset)
             interacting = False
 
+        print(self.scenemap.scene_map)
+
     def render(self, surf):
         self.scenemap.render(surf)
         self.cursor.render(surf)
@@ -56,9 +58,13 @@ class GameState(State):
             interaction_key = result[0]
             interaction_data = result[1]
             textbox_state = Textbox(self.game, self.cursor, asset['subtype'], asset['variant'], interaction_key, interaction_data)
+            textbox_state.enter_state()
         elif asset['type'] == 'evidence_far':
             asset_dialogue = self.game.dialogue_data[asset['type']]
             interaction_key = asset_dialogue[asset['name']]
             textbox_state = Textbox(self.game, self.cursor, asset['subtype'], asset['variant'], asset['name'], asset_dialogue[asset['name']])
+            textbox_state.enter_state()
+        elif asset['type'] == 'bg_interactables':
+            self.scenemap.load('apartment')
 
-        textbox_state.enter_state()
+        

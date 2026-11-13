@@ -1,3 +1,11 @@
+*** pre alpha 0.1.32 *** 11/12 KM
+
+Added new image assets and while trying to add the new door asset scene "updator" in the editor I will need how to update how I handle
+tkinter.
+
+---NOTES---
+Will need to make a main tkinter root window. Use toplevel windows for individual editor/dialog windows
+
 *** pre alpha 0.1.31 *** 11/6 KM
 
 Implemented logic whenever a player clicks on a character or evidence asset.

@@ -28,6 +28,7 @@ class Editor():
         self.ctrl:bool
         self.scene_name: str
         self.bg: str
+        self.root: tk
 
         # Initializing variables
         pygame.display.set_caption('Scene Editor')
@@ -38,8 +39,10 @@ class Editor():
         self.assets = {
             'characters_far': load_images('characters_far'),
             'characters_close': load_images('characters_close'),
-            'backgrounds': load_images("backgrounds"),
-            'evidence_far': load_images('evidence_far')
+            'backgrounds': load_images('backgrounds'),
+            'evidence_far': load_images('evidence_far'),
+            'evidence_close': load_images('evidence_close'),
+            'bg_interactables': load_images('bg_interactables') 
         }
         self.scenemap = Scenemap(self)
         self.surf_list = []
@@ -61,10 +64,14 @@ class Editor():
         self.scene_name = 'untitled'
         self.bg = 'none'
 
+        self.root = tk.Tk()
+        # self.root.withdraw()
+
         # print(self.assets['backgrounds'])
 
     def run(self):
         while self.running:
+            self.root.update()
             self.display.fill((255, 255, 255))
             self.scenemap.render(self.display)
 
@@ -92,14 +99,50 @@ class Editor():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: # Left click
                         self.left_click = True
-                        self.scenemap.scene_map.append({
-                            'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
-                            'type': self.surf_list[self.surf_type],
-                            'subtype': self.surf_list[self.surf_type].split('_')[0],
-                            'variant': self.surf_variant, 
-                            'pos': (mpos[0], mpos[1]), 
-                            'size': pygame.Surface.get_size(self.assets[self.surf_list[self.surf_type]][self.surf_variant])
-                        })
+                        asset_type = self.surf_list[self.surf_type]
+                        if asset_type == 'bg_interactables':
+                            next_scene_name:str = 'none'
+                            scenes:list = get_file_names('assets/scenes')
+                            # Creating tkinter window
+                            root = tk.Tk()
+                            root.title('New scenename')
+                            # Creating stringvar
+                            scene_var = tk.StringVar()
+                            scene_var.set(next_scene_name)
+                            # Creating apply func
+                            def apply():
+                                next_scene_name = scene_var.get()
+                                self.scenemap.scene_map.append({
+                                    'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
+                                    'type': self.surf_list[self.surf_type],
+                                    'subtype': self.surf_list[self.surf_type].split('_')[0],
+                                    'variant': self.surf_variant, 
+                                    'pos': (mpos[0], mpos[1]), 
+                                    'size': pygame.Surface.get_size(self.assets[self.surf_list[self.surf_type]][self.surf_variant]),
+                                    'next_scene': next_scene_name
+                                })
+                                root.destroy()
+                            # Creating dropdown menu
+                            tk.Label(root, text='Next scene:').grid(row=1, column=0)
+                            bg_dropdown = ttk.Combobox(root, textvariable=scene_var, width=20)
+                            bg_dropdown['values'] = scenes
+                            bg_dropdown.grid(row=1, column=1, columnspan=2)
+                            bg_dropdown.current()
+                            # Creating button
+                            tk.Button(root, text='Apply', width=10, command=apply).grid(row=3, column=0)
+                            # Displaying menu
+                            root.mainloop()
+                        else:
+                            self.scenemap.scene_map.append({
+                                'name': get_file_names(BASE_IMG_PATH + str(self.surf_list[self.surf_type]), '_')[self.surf_variant],
+                                'type': self.surf_list[self.surf_type],
+                                'subtype': self.surf_list[self.surf_type].split('_')[0],
+                                'variant': self.surf_variant, 
+                                'pos': (mpos[0], mpos[1]), 
+                                'size': pygame.Surface.get_size(self.assets[self.surf_list[self.surf_type]][self.surf_variant])
+                            })
+
+                    print(self.scenemap.scene_map)
                     if event.button == 3: # Right click
                         self.right_click = True
                     if self.shift:
@@ -128,8 +171,10 @@ class Editor():
                         self.ctrl = True
 
                     if event.key == pygame.K_m:
+                        # scene_name:str = 'untitled'
+                        # bg:str = 'none'
                         backgrounds:list = get_file_names(BASE_IMG_PATH + 'backgrounds')
-                        print(backgrounds)
+                        scenes: list = get_file_names('assets/scenes')
                         backgrounds.insert(0, 'none')
 
                         # Creating tkinter window
@@ -156,13 +201,11 @@ class Editor():
                                     'variant': self.bg_variant,
                                     'pos': (0, 0)
                                 }
-                            print(self.scenemap.scene_bg)
                             tk.Label(root, text=f"The background '{self.bg}' has been applied!").grid(row=2, column=0, columnspan=4)
 
                         def save():
                             self.scene_name = scene_var.get()
                             self.bg = bg_var.get()
-                            scenes = get_file_names('assets/scenes')
 
                             if not scenes: # Scenes list is empty
                                 self.scenemap.save(self.scene_name)
@@ -191,12 +234,12 @@ class Editor():
                         tk.Label(root, text='Map Name:').grid(row=0, column=0)
                         tk.Entry(root, textvariable=scene_var, width=20).grid(row=0, column=1, columnspan=2)
 
-                        # Background combobox
+                        # Background dropdown menu combobox
                         tk.Label(root, text='Background:').grid(row=1, column=0)
-                        bg = ttk.Combobox(root, textvariable=bg_var, width=20)
-                        bg['values'] = backgrounds
-                        bg.grid(row=1, column=1, columnspan=2)
-                        bg.current()
+                        bg_dropdown = ttk.Combobox(root, textvariable=bg_var, width=20)
+                        bg_dropdown['values'] = backgrounds
+                        bg_dropdown.grid(row=1, column=1, columnspan=2)
+                        bg_dropdown.current()
 
                         # Buttons
                         tk.Button(root, text='Apply', width=10, command=apply).grid(row=3, column=0)
